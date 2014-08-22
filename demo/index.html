@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>jquery-circle-progress - Demo</title>
+    <meta content="noindex" name="robots">
+
+    <style>
+        body {
+            background-color: #444;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            margin: 6px;
+            display: inline-block;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="first circle"></div>
+    <div class="second circle"></div>
+    <div class="third circle"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../dist/circle-progress.js"></script>
+
+    <script>
+        $('.first.circle').circleProgress({ value: 0.35, startColor: '#ff1e41', endColor: '#ff5f43' });
+        $('.second.circle').circleProgress({ value: 0.6 });
+        $('.third.circle').circleProgress({ value: 0.8, startColor: '#0681c4', endColor: '#07c6c1' });
+    </script>
+</body>
+
+</html>
