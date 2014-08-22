@@ -49,9 +49,9 @@ When animation is enabled, there are 3 events available:
 
 | Event | Handler |
 | ---- | ---- |
-| circle-animation-start | `function(event /* jQuery event */)` |
-| circle-animation-progress | `function(event /* jQuery event */, progress /* number in range: 0.0 ... 1.0 */)` |
-| circle-animation-end | `function(event /* jQuery event */)` |
+| circle-animation-start | ```js function(event /* jQuery event */)``` |
+| circle-animation-progress | ```js function(event /* jQuery event */, progress /* number in range: 0.0 ... 1.0 */)``` |
+| circle-animation-end | ```js function(event /* jQuery event */)``` |
 
 Misc
 ----
