@@ -110,7 +110,7 @@ $.fn.circleProgress = function(options) {
                 $.extend({}, options.animation, {
                     step: function(p) {
                         _draw(p);
-                        el.trigger('circle-animation-progress', [p / v]);
+                        el.trigger('circle-animation-progress', [p, p / v]);
                     },
 
                     complete: function() {

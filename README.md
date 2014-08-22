@@ -50,7 +50,7 @@ When animation is enabled, there are 3 events available:
 | Event | Handler |
 | ---- | ---- |
 | circle-animation-start | `function(event)` |
-| circle-animation-progress | `js function(event, progress /* 0.0 - 1.0 */)` |
+| circle-animation-progress | `function(event, stepValue /* from 0 to value */, animationProgress /* from 0 to 1 */)` |
 | circle-animation-end | `function(event)` |
 
 Misc
