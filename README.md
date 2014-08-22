@@ -51,7 +51,7 @@ When animation is enabled, there are 3 events available:
 | Event | Handler |
 | ---- | ---- |
 | `circle-animation-start` | `function(event)`: <br>- `event` - jQuery event |
-| `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - current animation progress: from `0.0` to `1.0` <br>- `stepValue` - current animation value: from `0.0` to *value* |
+| `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - animation progress: from `0.0` to `1.0` <br>- `stepValue` - current animation value: from `0.0` to *value* |
 | `circle-animation-end` | `function(event)`: <br>- `event` - jQuery event |
 
 Misc
