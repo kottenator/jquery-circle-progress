@@ -35,7 +35,7 @@ Here are all available options:
 
 | Option  | Default | Description |
 | ---- | ---- | ---- |
-| **value** | `0` | You should specify your own - this is the only required option. It should be in range: `0.0 ... 1.0` |
+| **value** | `0` | You should specify your own - this is the only required option. It should be from `0.0` to `1.0` |
 | size | `100` | Size of the circle / canvas in pixels |
 | startAngle | `-Math.PI` | Initial angle (for `0` value) |
 | startColor | `"#3aeabb"` | Left gradient's side color |
@@ -56,7 +56,7 @@ When animation is enabled, there are 3 events available:
 
 Misc
 ----
-You can get the `<canvas>` (but only if the widget is already inited):
+You can get the `<canvas>` *(but only if the widget is already inited)*:
 ```js
 $('#circle').circleProgress({ value: 0.5 });
 var canvas = $('#circle').circleProgress('widget');
