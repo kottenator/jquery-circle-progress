@@ -8,7 +8,7 @@ jQuery Plugin to draw animated circular progress bars like this:
 Browsers support
 ----------------
 It uses `<canvas>` which is supported by all modern browsers (including mobile browsers) 
-and Internet Explorer 9+.
+and Internet Explorer 9+ ([http://caniuse.com/#search=canvas](Can I Use)).
 
 I have not implemented any fallback / polyfill for unsupported browsers yet 
 *(i.e. for Internet Explorer 8 and older / misc browsers)*.
@@ -34,12 +34,41 @@ You should specify options like in usage example above.
 Here are all available options:
 
 | Option  | Default | Description |
-| ------------- | ------------- | ------------- |
+| ---- | ---- | ---- |
 | **value** | 0 | Despite of default value, you should specify your own. This is the only required option. It should be in range: `0.0 ... 1.0` |
 | size | 100 | Size of the circle / canvas in pixels |
-| startColor | '#3aeabb' |  |
-| endColor | '#fdd250' |  |
-| animation | ```{
-    duration: 1200,
-    easing: 'circleProgressEase' // equal to EaseInOutCubic
-}``` | Animation config. See [jQuery Animations](http://api.jquery.com/animate/). You may also set it to `false` |
+| startColor | '#3aeabb' | Left gradient's side color |
+| endColor | '#fdd250' | Right gradient's side color |
+| animation | `{ duration: 1200, easing: 'circleProgressEase' }` | Animation config. See [jQuery Animations](http://api.jquery.com/animate/). You may also set it to `false` |
+
+Events
+------
+When animation is enabled, there are 3 events available:
+
+| Event | Handler |
+| ---- | ---- |
+| circle-animation-start | `function(event /* jQuery event */)` |
+| circle-animation-progress | `function(event /* jQuery event */, progress /* number in range: 0.0 ... 1.0 */)` |
+| circle-animation-end | `function(event /* jQuery event */)` |
+
+Misc
+----
+You can get the `<canvas>` (but only if the widget is already inited):
+```js
+$('#circle').circleProgress({ value: 0.5 });
+var canvas = $('#circle').circleProgress('widget');
+```
+
+You can change the default options:
+```
+$.circleProgress.defaults = {
+    value: 0.5,
+    size: 50,
+    startColor: 'red',
+    endColor: 'orange',
+    animation: {
+        duration: 500,
+        easing: 'linear'
+    }
+}
+```
