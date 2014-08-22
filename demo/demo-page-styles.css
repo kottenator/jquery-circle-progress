@@ -1,0 +1,36 @@
+/* These are just a test styles - you don't need them in your project */
+body {
+    background-color: #444;
+    text-align: center;
+    padding-top: 40px;
+    font: 16px/1.5 Arial, sans-serif;
+    color: #fff;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    margin: 6px;
+    display: inline-block;
+    position: relative;
+}
+
+.circle strong {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    margin-top: -20px;
+    font-size: 30px;
+}
+
+.circle span {
+    margin-top: 5px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}

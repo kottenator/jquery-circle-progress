@@ -17,6 +17,7 @@ $.circleProgress = {
     defaults: {
         value: 0,
         size: 100,
+        startAngle: -Math.PI,
         startColor: '#3aeabb',
         endColor: '#fdd250',
         animation: {
@@ -50,16 +51,17 @@ $.fn.circleProgress = function(options) {
 
     return this.each(function() {
         var el = $(this),
-            s = options.size,  // square size
-            v = options.value, // current value: from 0.0 to 1.0
-            r = s / 2,         // radius
-            t = s / 14;        // thickness
+            s = options.size,           // square size
+            v = options.value,          // current value: from 0.0 to 1.0
+            sa = options.startAngle,    // start angle, radians
+            r = s / 2,                  // radius
+            t = s / 14;                 // thickness
 
         // Prepare canvas
         var canvas = el.data('circle-progress');
 
         if (!canvas) {
-            canvas = $('<canvas>').appendTo(el)[0];
+            canvas = $('<canvas>').prependTo(el)[0];
             el.data('circle-progress', canvas);
         }
 
@@ -90,8 +92,8 @@ $.fn.circleProgress = function(options) {
 
             // Draw progress arc
             ctx.beginPath();
-            ctx.arc(r, r, r, -Math.PI, -Math.PI + Math.PI * 2 * p);
-            ctx.arc(r, r, r - t, -Math.PI + Math.PI * 2 * p, -Math.PI, true);
+            ctx.arc(r, r, r, sa, sa + Math.PI * 2 * p);
+            ctx.arc(r, r, r - t, sa + Math.PI * 2 * p, sa, true);
             ctx.closePath();
             ctx.save();
             ctx.clip();
@@ -110,7 +112,7 @@ $.fn.circleProgress = function(options) {
                 $.extend({}, options.animation, {
                     step: function(p) {
                         _draw(p);
-                        el.trigger('circle-animation-progress', [p, p / v]);
+                        el.trigger('circle-animation-progress', [p / v, p]);
                     },
 
                     complete: function() {
