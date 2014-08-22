@@ -39,7 +39,9 @@ Here are all available options:
 | size | 100 | Size of the circle / canvas in pixels |
 | startColor | '#3aeabb' | Left gradient's side color |
 | endColor | '#fdd250' | Right gradient's side color |
-| animation | `{ duration: 1200, easing: 'circleProgressEase' }` | Animation config. See [jQuery Animations](http://api.jquery.com/animate/). You may also set it to `false` |
+| animation | ... | Animation config. See [jQuery Animations](http://api.jquery.com/animate/). You may also set it to `false` |
+| animation.duration | 1200 | Duration in ms |
+| animation.easing | 'circleProgressEase' | Easing function name. Default one is just a copy of 'ease-in-out-cubic' |
 
 Events
 ------
