@@ -8,7 +8,7 @@ jQuery Plugin to draw animated circular progress bars like this:
 Browsers support
 ----------------
 It uses `<canvas>` which is supported by all modern browsers (including mobile browsers) 
-and Internet Explorer 9+ ([http://caniuse.com/#search=canvas](Can I Use)).
+and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
 
 I have not implemented any fallback / polyfill for unsupported browsers yet 
 *(i.e. for Internet Explorer 8 and older / misc browsers)*.
