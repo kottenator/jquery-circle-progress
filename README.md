@@ -7,9 +7,13 @@ jQuery Plugin to draw animated circular progress bars like this:
 
 Check out [more examples](http://kottenator.github.io/jquery-circle-progress/)!
 
+Install
+-------
+Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases)
+or `bower install jquery-circle-progress`
+
 Usage
 -----
-
 ```html
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="jquery-circle-progress/dist/circle-progress.js"></script>
@@ -24,19 +28,6 @@ Usage
     });
 </script>
 ```
-
-Browsers support
-----------------
-It uses `<canvas>` which is supported by all modern browsers *(including mobile browsers)*
-and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
-
-I have not implemented any fallback / polyfill for unsupported browsers yet
-*(i.e. for Internet Explorer 8 and older / misc browsers)*.
-
-Install
--------
-Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases)
-or `bower install jquery-circle-progress`
 
 Options
 -------
@@ -60,6 +51,14 @@ When animation is enabled, there are 3 events available:
 | `circle-animation-start` | `function(event)`: <br>- `event` - jQuery event |
 | `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - from `0.0` to `1.0` <br>- `stepValue` - current step value: from `0.0` to *value* |
 | `circle-animation-end` | `function(event)`: <br>- `event` - jQuery event |
+
+Browsers support
+----------------
+It uses `<canvas>` which is supported by all modern browsers *(including mobile browsers)*
+and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
+
+I have not implemented any fallback / polyfill for unsupported browsers yet
+*(i.e. for Internet Explorer 8 and older / misc browsers)*.
 
 Misc
 ----
