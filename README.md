@@ -17,7 +17,11 @@ Usage
 <div id="circle"></div>
 
 <script>
-    $('#circle').circleProgress({ value: 0.75, fill: { gradient: ["red", "orange"] })
+    $('#circle').circleProgress({
+        value: 0.75,
+        size: 80,
+        fill: { gradient: ["red", "orange"]
+    });
 </script>
 ```
 
