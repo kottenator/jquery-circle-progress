@@ -31,25 +31,77 @@ I have not implemented any fallback / polyfill for unsupported browsers yet
 
 Install
 -------
-Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases) 
+Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases)
 or `bower install jquery-circle-progress`
 
 Options
 -------
 You should specify options like in usage example above.
 
-Here are all available options:
+<table>
+<thead>
+    <tr>
+        <th>Option</th>
+        <th>Default</th>
+        <th>Description</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>**value**</td>
+        <td>`0`</td>
+        <td>
+            You should specify your own - this is the only required option.
+            It should be from `0.0` to `1.0`
+        </td>
+    <tr>
+    <tr>
+        <td>size</td>
+        <td>`100`</td>
+        <td>Size of the circle / canvas in pixels</td>
+    <tr>
+    <tr>
+        <td>startAngle</td>
+        <td>`-Math.PI`</td>
+        <td>Initial angle (for `0` value)</td>
+    <tr>
+    <tr>
+        <td>fill</td>
+        <td>
+```js
+    {
+        gradient: ["#3aeabb", "#fdd250"]
+    }
+```
+        </td>
+        <td>
+            The arc fill config. You may specify next: <br>
+            - `{ gradient: ["red", "green", "blue"] }` <br>
+            - `{ color: "#ff1e41" }` <br>
+            - `{ image: "http://i.imgur.com/pT0i89v.png" }`
+            - `{ image: "http://i.imgur.com/pT0i89v.png", color: "lime" }`
+        </td>
+    <tr>
+    <tr>
+        <td>animation</td>
+        <td>
+```js
+    {
+        duration: 1200,
+        easing: "circleProgressEase"
+    }
+```
+        </td>
+        <td>
+            Animation config. See [jQuery Animations](http://api.jquery.com/animate/).
 
-| Option  | Default | Description |
-| ---- | ---- | ---- |
-| **value** | `0` | You should specify your own - this is the only required option. It should be from `0.0` to `1.0` |
-| size | `100` | Size of the circle / canvas in pixels |
-| startAngle | `-Math.PI` | Initial angle (for `0` value) |
-| startColor | `"#3aeabb"` | Left gradient's side color |
-| endColor | `"#fdd250"` | Right gradient's side color |
-| animation | ... | Animation config. See [jQuery Animations](http://api.jquery.com/animate/). You may also set it to `false` |
-| animation.duration | `1200` | Duration in ms |
-| animation.easing | `"circleProgressEase"` | Easing function name. Default one is just a copy of *ease-in-out-cubic* |
+            You may also set it to `false`.
+
+            Easing function is just a renamed *ease-in-out-cubic*
+        </td>
+    <tr>
+</tbody>
+</table>
 
 Events
 ------
@@ -72,14 +124,16 @@ var canvas = $('#circle').circleProgress('widget');
 You can change the default options:
 ```js
 $.circleProgress.defaults = {
-    value: 0.5,
-    size: 50,
-    startAngle: -Math.PI / 2,
-    startColor: 'red',
-    endColor: 'orange',
+    value: 0,
+    size: 100,
+    startAngle: -Math.PI,
+    thickness: 'auto', // by default it's 1/14 of the size, but you may set it explicitly in px
+    fill: {
+        gradient: ['#3aeabb', '#fdd250'] // or color: '#3aeabb', or image: 'http://i.imgur.com/pT0i89v.png'
+    },
     animation: {
-        duration: 500,
-        easing: 'linear'
+        duration: 1200,
+        easing: 'circleProgressEase' // equal to EaseInOutCubic
     }
 }
 ```
