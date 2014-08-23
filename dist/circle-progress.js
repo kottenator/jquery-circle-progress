@@ -2,7 +2,7 @@
  * jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
  *
  * @author https://github.com/kottenator
- * @version 0.5.1
+ * @version 0.5.2
  */
 
 // Renamed ease-in-out-cubic
@@ -111,25 +111,12 @@ $.fn.circleProgress = function(options) {
             _draw(v);
 
         function _draw(p) {
+            ctx.save();
+
             // Clear frame
             ctx.clearRect(0, 0, s, s);
 
-            // Draw background circle
-            ctx.beginPath();
-            ctx.arc(r, r, r, -Math.PI, Math.PI);
-            ctx.arc(r, r, r - t, Math.PI, -Math.PI, true);
-            ctx.closePath();
-            ctx.fillStyle = circleFill;
-            ctx.fill();
-
-            // Draw progress arc
-            ctx.beginPath();
-            ctx.arc(r, r, r, sa, sa + Math.PI * 2 * p);
-            ctx.arc(r, r, r - t, sa + Math.PI * 2 * p, sa, true);
-            ctx.closePath();
-            ctx.save();
-            ctx.clip();
-
+            // Draw background first
             if (imageFill) {
                 ctx.drawImage(imageFill, 0, 0, s, s);
             } else {
@@ -137,7 +124,25 @@ $.fn.circleProgress = function(options) {
                 ctx.fillRect(0, 0, s, s);
             }
 
-            ctx.restore(); // remove clip
+            // Draw progress arc, using compositions instead of clipping -
+            // specially for Chrome, which doesn't anti-alias clipping path
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.beginPath();
+            ctx.arc(r, r, r, sa, sa + Math.PI * 2 * p);
+            ctx.arc(r, r, r - t, sa + Math.PI * 2 * p, sa, true);
+            ctx.closePath();
+            ctx.fill();
+
+            // Draw background circle
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.fillStyle = circleFill;
+            ctx.beginPath();
+            ctx.arc(r, r, r, -Math.PI, Math.PI);
+            ctx.arc(r, r, r - t, Math.PI, -Math.PI, true);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.restore();
         }
 
         function _drawAnimated(v) {
