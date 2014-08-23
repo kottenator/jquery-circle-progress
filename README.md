@@ -23,7 +23,7 @@ Usage
 
 Browsers support
 ----------------
-It uses `<canvas>` which is supported by all modern browsers (including mobile browsers)
+It uses `<canvas>` which is supported by all modern browsers *(including mobile browsers)*
 and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
 
 I have not implemented any fallback / polyfill for unsupported browsers yet
@@ -43,6 +43,7 @@ You should specify options like in usage example above.
 | **value** | This is the only required option. It should be from `0.0` to `1.0` <br> Default: `0` |
 | size | Size of the circle / canvas in pixels <br> Default: `100` |
 | startAngle | Initial angle (for `0` value) <br> Default: `-Math.PI` |
+| thickness | Width of the arc. By default it's automatically calculated as 1/14 of `size` but you may set your own number <br> Default: `"auto"` |
 | fill | The arc fill config. You may specify next: <br>- `{ gradient: ["red", "green", "blue"] }` <br>- `{ color: "#ff1e41" }` <br>- `{ image: "http://i.imgur.com/pT0i89v.png" }`<br>- `{ color: "lime", image: "http://i.imgur.com/pT0i89v.png" }` <br> Default: `{ gradient: ["#3aeabb", "#fdd250"] }` |
 | animation | Animation config. See [jQuery animations](http://api.jquery.com/animate/). <br> You may also set it to `false` <br> Default: `{ duration: 1200, ease: "circleProgressEase" }`  <br> `"circleProgressEase"` *is just a ease-in-out-cubic easing* |
 
@@ -66,17 +67,5 @@ var canvas = $('#circle').circleProgress('widget');
 
 You can change the default options:
 ```js
-$.circleProgress.defaults = {
-    value: 0,
-    size: 100,
-    startAngle: -Math.PI,
-    thickness: 'auto', // by default it's 1/14 of the size, but you may set it explicitly in px
-    fill: {
-        gradient: ['#3aeabb', '#fdd250'] // or color: '#3aeabb', or image: 'http://i.imgur.com/pT0i89v.png'
-    },
-    animation: {
-        duration: 1200,
-        easing: 'circleProgressEase' // equal to EaseInOutCubic
-    }
-}
+$.circleProgress.defaults.size = 50;
 ```
