@@ -5,14 +5,6 @@ jQuery Plugin to draw animated circular progress bars like this:
 
 ![image](http://i.imgur.com/zV5VUQG.png)
 
-Browsers support
-----------------
-It uses `<canvas>` which is supported by all modern browsers (including mobile browsers)
-and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
-
-I have not implemented any fallback / polyfill for unsupported browsers yet
-*(i.e. for Internet Explorer 8 and older / misc browsers)*.
-
 Usage
 -----
 
@@ -26,6 +18,19 @@ Usage
     $('#circle').circleProgress({ value: 0.75, startColor: 'red', endColor: 'orange' })
 </script>
 ```
+
+Browsers support
+----------------
+It uses `<canvas>` which is supported by all modern browsers (including mobile browsers)
+and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
+
+I have not implemented any fallback / polyfill for unsupported browsers yet
+*(i.e. for Internet Explorer 8 and older / misc browsers)*.
+
+Install
+-------
+Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases) 
+or `bower install jquery-circle-progress`
 
 Options
 -------

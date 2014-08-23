@@ -1,6 +1,6 @@
 {
   "name": "jquery-circle-progress",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "homepage": "https://github.com/kottenator/jquery-circle-progress",
   "authors": ["https://github.com/kottenator"],
   "description": "Plugin to draw animated circular progress bars",

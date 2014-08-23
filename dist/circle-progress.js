@@ -18,8 +18,10 @@ $.circleProgress = {
         value: 0,
         size: 100,
         startAngle: -Math.PI,
-        startColor: '#3aeabb',
-        endColor: '#fdd250',
+        thickness: 'auto', // by default it's 1/14 of the size, but you may set it explicitly in px
+        fill: {
+            gradient: ['#3aeabb', '#fdd250'] // or color: '#3aeabb', or image: 'http://i.imgur.com/pT0i89v.png'
+        },
         animation: {
             duration: 1200,
             easing: 'circleProgressEase' // equal to EaseInOutCubic
@@ -51,11 +53,14 @@ $.fn.circleProgress = function(options) {
 
     return this.each(function() {
         var el = $(this),
-            s = options.size,           // square size
-            v = options.value,          // current value: from 0.0 to 1.0
-            sa = options.startAngle,    // start angle, radians
-            r = s / 2,                  // radius
-            t = s / 14;                 // thickness
+            s = options.size,        // square size
+            v = options.value,       // current value: from 0.0 to 1.0
+            sa = options.startAngle, // start angle, radians
+            r = s / 2,               // radius
+            t = s / 14;              // thickness
+
+        if ($.isNumeric(options.thickness))
+            t = options.thickness;
 
         // Prepare canvas
         var canvas = el.data('circle-progress');
@@ -68,10 +73,36 @@ $.fn.circleProgress = function(options) {
         canvas.width = s;
         canvas.height = s;
         var ctx = canvas.getContext('2d');
-        var lg = ctx.createLinearGradient(0, 0, s, 0);
-        lg.addColorStop(0, options.startColor);
-        lg.addColorStop(1, options.endColor);
-        ctx.fillStyle = "rgba(0, 0, 0, .1)";
+
+        var arcFill = 'rgba(0, 0, 0, .5)';
+        var circleFill = 'rgba(0, 0, 0, .1)';
+        var imageFill;
+
+        if (options.fill) {
+            if (options.fill.color) {
+                arcFill = options.fill.color;
+            }
+
+            if (options.fill.gradient) {
+                var gr = options.fill.gradient;
+                if (gr.length == 1) {
+                    arcFill = gr[0];
+                } else if (gr.length > 1) {
+                    var lg = ctx.createLinearGradient(0, 0, s, 0);
+                    for (var i = 0; i < gr.length; i++)
+                        lg.addColorStop(i / (gr.length - 1), gr[i]);
+                    arcFill = lg;
+                }
+            }
+
+            if (options.fill.image) {
+                var img = new Image();
+                img.src = options.fill.image;
+                img.onload = function() {
+                    imageFill = img;
+                }
+            }
+        }
 
         // Draw circle
         if (options.animation)
@@ -88,7 +119,8 @@ $.fn.circleProgress = function(options) {
             ctx.arc(r, r, r, -Math.PI, Math.PI);
             ctx.arc(r, r, r - t, Math.PI, -Math.PI, true);
             ctx.closePath();
-            ctx.fill(); // gray fill
+            ctx.fillStyle = circleFill;
+            ctx.fill();
 
             // Draw progress arc
             ctx.beginPath();
@@ -97,9 +129,15 @@ $.fn.circleProgress = function(options) {
             ctx.closePath();
             ctx.save();
             ctx.clip();
-            ctx.fillStyle = lg;
-            ctx.fillRect(0, 0, s, s); // gradient fill
-            ctx.restore();
+
+            if (imageFill) {
+                ctx.drawImage(imageFill, 0, 0, s, s);
+            } else {
+                ctx.fillStyle = arcFill;
+                ctx.fillRect(0, 0, s, s);
+            }
+
+            ctx.restore(); // remove clip
         }
 
         function _drawAnimated(v) {
