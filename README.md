@@ -19,6 +19,8 @@ Usage
 </script>
 ```
 
+Check out [more examples](http://kottenator.github.io/jquery-circle-progress/)!
+
 Browsers support
 ----------------
 It uses `<canvas>` which is supported by all modern browsers (including mobile browsers)

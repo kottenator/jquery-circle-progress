@@ -2,7 +2,7 @@
  * jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
  *
  * @author https://github.com/kottenator
- * @version 0.5
+ * @version 0.5.1
  */
 
 // Renamed ease-in-out-cubic
@@ -38,7 +38,7 @@ $.circleProgress = {
  *
  *   - circle-animation-start(event)
  *   - circle-animation-progress(event, progress) - multiple; progress: from 0.0 to 1.0
-*   - circle-animation-end(event)
+ *   - circle-animation-end(event)
  *
  * @param options Example: { value: 0.75, size: 50, animation: false };
  *                you may set any of default options;
