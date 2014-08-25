@@ -2,7 +2,7 @@
  * jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
  *
  * @author https://github.com/kottenator
- * @version 0.6
+ * @version 0.6.0
  */
 
 $.circleProgress = {
