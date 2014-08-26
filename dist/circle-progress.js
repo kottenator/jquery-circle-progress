@@ -2,7 +2,7 @@
  * jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
  *
  * @author https://github.com/kottenator
- * @version 0.6.0
+ * @version 0.6.1
  */
 
 $.circleProgress = {
@@ -60,7 +60,14 @@ $.circleProgress = {
         animation: {
             duration: 1200,
             easing: 'circleProgressEasing'
-        }
+        },
+
+        /**
+         * Should we start animation from 0.0 to value (direct) or from 1.0 to value (reversed)?
+         * By default - from 0.0 to value (direct)
+         * @type {bool}
+         */
+        reversedAnimation: false
     }
 };
 
@@ -103,6 +110,7 @@ $.fn.circleProgress = function(options) {
             value = options.value,
             startAngle = options.startAngle,
             emptyArcFill = options.emptyFill,
+            reversedAnimation = options.reversedAnimation,
             arcFill;
 
         if ($.isNumeric(options.thickness))
@@ -149,7 +157,7 @@ $.fn.circleProgress = function(options) {
                 bg.getContext('2d').drawImage(img, 0, 0, size, size);
                 arcFill = ctx.createPattern(bg, 'no-repeat');
 
-                // we need to redraw static value
+                // we need to redraw the arc when there is no animation
                 if (!options.animation)
                     draw(value);
             }
@@ -194,11 +202,15 @@ $.fn.circleProgress = function(options) {
         function drawAnimated(v) {
             el.trigger('circle-animation-start');
 
-            $(canvas).css({ progress: 0 }).animate({ progress: v },
+            $(canvas).css({ progress: 0 }).animate({ progress: reversedAnimation ? 1 - v : v },
                 $.extend({}, options.animation, {
                     step: function(p) {
-                        draw(p);
-                        el.trigger('circle-animation-progress', [p / v, p]);
+                        var animationProgress = reversedAnimation ? p / (1 - v) : p / v,
+                            stepValue = reversedAnimation ? 1 - p : p;
+
+                        draw(stepValue);
+
+                        el.trigger('circle-animation-progress', [animationProgress, stepValue]);
                     },
 
                     complete: function() {

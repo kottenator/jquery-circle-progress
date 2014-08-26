@@ -44,6 +44,7 @@ You should specify options like in usage example above.
 | fill | The arc fill config. You may specify next: <br>- `{ gradient: ["red", "green", "blue"] }` <br>- `{ color: "#ff1e41" }` <br>- `{ image: "http://i.imgur.com/pT0i89v.png" }`<br>- `{ color: "lime", image: "http://i.imgur.com/pT0i89v.png" }` <br> Default: `{ gradient: ["#3aeabb", "#fdd250"] }` |
 | emptyFill | Color of the "empty" arc. Only a color fill supported by now <br> Default: `"rgba(0, 0, 0, .1)"` |
 | animation | Animation config. See [jQuery animations](http://api.jquery.com/animate/). <br> You may also set it to `false` <br> Default: `{ duration: 1200, ease: "circleProgressEase" }`  <br> `"circleProgressEase"` *is just a ease-in-out-cubic easing* |
+| reversedAnimation | Should we start animation from `0.0` to `value` *(direct)* or from `1.0` to `value` *(reversed)?* <br> Default: `false` (i.e. *direct* animation) |
 
 Events
 ------
@@ -52,7 +53,7 @@ When animation is enabled, there are 3 events available:
 | Event | Handler |
 | ---- | ---- |
 | `circle-animation-start` | `function(event)`: <br>- `event` - jQuery event |
-| `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - from `0.0` to `1.0` <br>- `stepValue` - current step value: from `0.0` to *value* |
+| `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - from `0.0` to `1.0` <br>- `stepValue` - current step value: from `0.0` to `value` |
 | `circle-animation-end` | `function(event)`: <br>- `event` - jQuery event |
 
 Browsers support
