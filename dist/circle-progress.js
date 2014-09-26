@@ -15,6 +15,12 @@ $.circleProgress = {
         value: 0,
 
         /**
+         * Start position
+         * @type {int}
+         */
+        start: 0,
+
+        /**
          * Size of the circle / canvas in pixels
          * @type {int}
          */
@@ -105,6 +111,7 @@ $.fn.circleProgress = function(options) {
     return this.each(function() {
         var el = $(this),
             size = options.size,
+            start = options.start,
             radius = size / 2,
             thickness = size / 14,
             value = options.value,
@@ -202,7 +209,7 @@ $.fn.circleProgress = function(options) {
         function drawAnimated(v) {
             el.trigger('circle-animation-start');
 
-            $(canvas).css({ progress: 0 }).animate({ progress: reversedAnimation ? 1 - v : v },
+            $(canvas).animate({ progress: start }, 0).animate({ progress: reversedAnimation ? 1 - v : v },
                 $.extend({}, options.animation, {
                     step: function(p) {
                         var animationProgress = reversedAnimation ? p / (1 - v) : p / v,
