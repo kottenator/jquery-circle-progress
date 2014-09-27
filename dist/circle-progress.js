@@ -2,7 +2,7 @@
  * jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
  *
  * @author https://github.com/kottenator
- * @version 0.6.1
+ * @version 0.7.0
  */
 
 $.circleProgress = {
@@ -63,11 +63,12 @@ $.circleProgress = {
         },
 
         /**
-         * Should we start animation from 0.0 to value (direct) or from 1.0 to value (reversed)?
-         * By default - from 0.0 to value (direct)
-         * @type {bool}
+         * Default animation starts at 0.0 and ends at specified `value`. Let's call this direct animation.
+         * If you want to make reversed animation then you should set `animationStartValue` to 1.0.
+         * Also you may specify any other value from 0.0 to 1.0
+         * @type {float}
          */
-        reversedAnimation: false
+        animationStartValue: 0.0
     }
 };
 
@@ -91,37 +92,62 @@ $.easing.circleProgressEasing = function(x, t, b, c, d) {
  *                                                                        stepValue: from 0.0 to value
  *   - circle-animation-end(jqEvent)
  *
- * @param options Example: { value: 0.75, size: 50, animation: false };
+ * @param config Example: { value: 0.75, size: 50, animation: false };
  *                you may set any of default options (see above);
  *                `animation` may be set to false;
  *                you may also use .circleProgress('widget') to get the canvas
  */
-$.fn.circleProgress = function(options) {
-    if (options == 'widget')
-        return this.data('circle-progress');
+$.fn.circleProgress = function(config) {
+    if (typeof config == 'string' && config != 'widget' && config != 'redraw')
+        throw Error("Only 2 commands supported: 'widget' and 'redraw'");
 
-    options = $.extend({}, $.circleProgress.defaults, options);
+    if (config == 'widget')
+        return this.data('circle-progress').widget;
 
     return this.each(function() {
-        var el = $(this),
-            size = options.size,
+        var el = $(this);
+
+        // Get/init data object
+        var dataName = 'circle-progress',
+            data = el.data(dataName);
+
+        if (!data) {
+            data = {
+                options: null,
+                widget: null
+            };
+
+            el.data(dataName, data);
+        }
+
+        // Get/init options
+        var options;
+
+        if (typeof config == 'undefined' || config == 'redraw') {
+            options = data.options;
+        } else {
+            options = $.extend({}, $.circleProgress.defaults, config);
+            data.options = options;
+        }
+
+        var size = options.size,
             radius = size / 2,
             thickness = size / 14,
             value = options.value,
             startAngle = options.startAngle,
             emptyArcFill = options.emptyFill,
-            reversedAnimation = options.reversedAnimation,
+            animationStartValue = options.animationStartValue,
             arcFill;
 
         if ($.isNumeric(options.thickness))
             thickness = options.thickness;
 
         // Prepare canvas
-        var canvas = el.data('circle-progress');
+        var canvas = data.widget;
 
         if (!canvas) {
             canvas = $('<canvas>').prependTo(el)[0];
-            el.data('circle-progress', canvas);
+            data.widget = canvas;
         }
 
         canvas.width = size;
@@ -199,25 +225,18 @@ $.fn.circleProgress = function(options) {
             ctx.restore();
         }
 
-        function drawAnimated(v) {
+        function drawAnimated(value) {
             el.trigger('circle-animation-start');
-
-            $(canvas).css({ progress: 0 }).animate({ progress: reversedAnimation ? 1 - v : v },
-                $.extend({}, options.animation, {
-                    step: function(p) {
-                        var animationProgress = reversedAnimation ? p / (1 - v) : p / v,
-                            stepValue = reversedAnimation ? 1 - p : p;
-
-                        draw(stepValue);
-
-                        el.trigger('circle-animation-progress', [animationProgress, stepValue]);
-                    },
-
-                    complete: function() {
-                        el.trigger('circle-animation-end');
-                    }
-                })
-            );
+            $(canvas).css({ animationProgress: 0 }).animate({ animationProgress: 1 }, $.extend({}, options.animation, {
+                step: function(animationProgress) {
+                    var stepValue = animationStartValue * (1 - animationProgress) + value * animationProgress;
+                    draw(stepValue);
+                    el.trigger('circle-animation-progress', [animationProgress, stepValue]);
+                },
+                complete: function() {
+                    el.trigger('circle-animation-end');
+                }
+            }));
         }
     });
 };
