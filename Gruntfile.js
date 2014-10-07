@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         'saucelabs-qunit': {
             all: {
                 options: {
-                    testname: 'QUnit Tests for jquery-circle-progress',
+                    testname: 'Unit Tests for jquery-circle-progress',
                     urls: ['localhost:9999/tests/index.html'],
                     build: process.env.TRAVIS_JOB_ID,
                     tunnelTimeout: 5,
