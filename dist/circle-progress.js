@@ -1,9 +1,11 @@
 /*
- * jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
- *
- * @author https://github.com/kottenator
- * @version 0.7.0
- */
+jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
+
+URL: http://kottenator.github.io/jquery-circle-progress/
+Author: Rostyslav Bryzgunov <kottenator@gmail.com>
+Version: 1.0.0
+License: MIT
+*/
 
 $.circleProgress = {
     // Default options (you may override them)
@@ -227,16 +229,19 @@ $.fn.circleProgress = function(config) {
 
         function drawAnimated(value) {
             el.trigger('circle-animation-start');
-            $(canvas).css({ animationProgress: 0 }).animate({ animationProgress: 1 }, $.extend({}, options.animation, {
-                step: function(animationProgress) {
-                    var stepValue = animationStartValue * (1 - animationProgress) + value * animationProgress;
-                    draw(stepValue);
-                    el.trigger('circle-animation-progress', [animationProgress, stepValue]);
-                },
-                complete: function() {
-                    el.trigger('circle-animation-end');
-                }
-            }));
+            $(canvas)
+                .stop(true, true)
+                .css({ animationProgress: 0 })
+                .animate({ animationProgress: 1 }, $.extend({}, options.animation, {
+                    step: function(animationProgress) {
+                        var stepValue = animationStartValue * (1 - animationProgress) + value * animationProgress;
+                        draw(stepValue);
+                        el.trigger('circle-animation-progress', [animationProgress, stepValue]);
+                    },
+                    complete: function() {
+                        el.trigger('circle-animation-end');
+                    }
+                }));
         }
     });
 };

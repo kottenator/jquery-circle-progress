@@ -1,17 +1,17 @@
 {
     "name": "jquery-circle-progress",
-    "version": "0.7.0",
+    "version": "1.0.0",
     "authors": [
         "Rostyslav Bryzgunov <kottenator@gmail.com>"
     ],
     "description": "Plugin to draw animated circular progress bars",
+    "license": "MIT",
     "main": "dist/circle-progress.js",
     "keywords": [
         "jquery",
         "canvas",
         "progress-bar"
     ],
-    "license": "MIT",
     "homepage": "https://kottenator.github.io/jquery-circle-progress/",
     "ignore": [
         "**/.*",
