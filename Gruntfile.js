@@ -9,6 +9,10 @@ module.exports = function(grunt) {
             }
         },
 
+        qunit: {
+            all: ['tests/index.html']
+        },
+
         'saucelabs-qunit': {
             all: {
                 options: {
@@ -28,6 +32,7 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-saucelabs');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.registerTask("test", ['connect', 'saucelabs-qunit']);
 };
