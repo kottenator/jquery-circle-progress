@@ -41,6 +41,7 @@ You should specify options like in usage example above.
 | **value** | This is the only required option. It should be from `0.0` to `1.0` <br> Default: `0` |
 | size | Size of the circle / canvas in pixels <br> Default: `100` |
 | startAngle | Initial angle (for `0` value) <br> Default: `-Math.PI` |
+| reverse | Reverse <br> Default: false |
 | thickness | Width of the arc. By default it's automatically calculated as 1/14 of `size` but you may set your own number <br> Default: `"auto"` |
 | fill | The arc fill config. You may specify next: <br>- `{ gradient: ["red", "green", "blue"] }` <br>- `{ color: "#ff1e41" }` <br>- `{ image: "http://i.imgur.com/pT0i89v.png" }`<br>- `{ color: "lime", image: "http://i.imgur.com/pT0i89v.png" }` <br> Default: `{ gradient: ["#3aeabb", "#fdd250"] }` |
 | emptyFill | Color of the "empty" arc. Only a color fill supported by now <br> Default: `"rgba(0, 0, 0, .1)"` |
