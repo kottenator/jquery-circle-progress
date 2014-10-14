@@ -5,7 +5,7 @@
         },
 
         pixelHex: function(canvas, x, y, expectedHex, message) {
-            return _pixelColor(canvas, x, y, expectedHex, null, message, _parseHex, _dumpHex);
+            return _pixelColor(canvas, x, y, expectedHex, null, message, _parseHex, _dumpHex, true);
         },
 
         pixelCloseRGBA: function(canvas, x, y, expectedRGBA, maxDiff, message) {
@@ -13,23 +13,23 @@
         },
 
         pixelCloseHex: function(canvas, x, y, expectedHex, maxDiff, message) {
-            return _pixelColor(canvas, x, y, expectedHex, maxDiff, message, _parseHex, _dumpHex);
+            return _pixelColor(canvas, x, y, expectedHex, maxDiff, message, _parseHex, _dumpHex, true);
         }
     });
 
-    function _pixelColor(canvas, x, y, expectedColor, maxDiff, message, parseColorFn, dumpColorFn) {
+    function _pixelColor(canvas, x, y, expectedColor, maxDiff, message, parseColorFn, dumpColorFn, ignoreAlpha) {
         var data = canvas.getContext('2d').getImageData(x, y, 1, 1).data,
             expectedData = parseColorFn(expectedColor),
             actualColor = dumpColorFn(data);
 
         maxDiff = maxDiff || 0;
 
-        var actualDiff = (
-            Math.abs(data[0] - expectedData[0]) / 255 +
-            Math.abs(data[1] - expectedData[1]) / 255 +
-            Math.abs(data[2] - expectedData[2]) / 255 +
-            Math.abs(data[3] - expectedData[3]) / 255
-        ) / 4;
+        var actualDiff = Math.max(
+            Math.abs(data[0] - expectedData[0]) / 255,
+            Math.abs(data[1] - expectedData[1]) / 255,
+            Math.abs(data[2] - expectedData[2]) / 255,
+            ignoreAlpha ? 0 : Math.abs(data[3] - expectedData[3]) / 255
+        );
 
         var result = actualDiff <= maxDiff;
 
@@ -70,6 +70,12 @@
     }
 
     function _dumpHex(data) {
-        return '#' + data[0].toString(16) + data[1].toString(16) + data[2].toString(16);
+        var r = '0' + data[0].toString(16),
+            g = '0' + data[1].toString(16),
+            b = '0' + data[2].toString(16);
+        r = r.substr(r.length - 2);
+        g = g.substr(g.length - 2);
+        b = b.substr(b.length - 2);
+        return '#' + r + g + b;
     }
 })();
