@@ -1,5 +1,5 @@
-QUnit.test("Test empty circle with no options", function(assert) {
-    if (Modernizr.canvas) {
+if (Modernizr.canvas) {
+    QUnit.test("Test empty circle with no options", function(assert) {
         var el = $('<div>').appendTo('#qunit-fixture').circleProgress({ value: 0 }),
             canvas = el.circleProgress('widget'),
             $canvas = $(canvas),
@@ -11,15 +11,24 @@ QUnit.test("Test empty circle with no options", function(assert) {
         assert.equal(canvas.tagName.toLowerCase(), 'canvas', "Method .circleProgress('widget') returns HTMLCanvasElement");
         assert.equal($canvas.width(), defaultSize, "Actual width: 100 pixels");
         assert.equal($canvas.height(), defaultSize, "Actual height: 100 pixels");
-        assert.equal(pixelColor(canvas, 0, defaultSize / 2), 'rgba(0, 0, 0, 0.1)', "Gray circle color: rgba(0, 0, 0, 0.1)");
-        assert.equal(pixelColor(canvas, defaultThickness - 1, defaultSize / 2), 'rgba(0, 0, 0, 0.1)', "Inside the border (6, 50)");
-        assert.equal(pixelColor(canvas, defaultThickness + 1, defaultSize / 2), 'rgba(0, 0, 0, 0)', "Outside the border (8, 50)");
-    }
-});
+        assert.pixelRGBA(canvas, 0, defaultSize / 2, 'rgba(0, 0, 0, 0.1)');
+        assert.pixelRGBA(canvas, defaultThickness - 1, defaultSize / 2, 'rgba(0, 0, 0, 0.1)');
+        assert.pixelRGBA(canvas, defaultThickness + 1, defaultSize / 2, 'rgba(0, 0, 0, 0)');
+    });
 
-function pixelColor(canvas, x, y) {
-    var ctx = canvas.getContext('2d');
-    var data = ctx.getImageData(x, y, 1, 1).data;
-    console.log(data);
-    return 'rgba(' + data[0] + ', ' + data[1] + ', ' +data[2] + ', ' + Math.round(data[3] / 255 * 100) / 100 + ')';
+    QUnit.test("Test basic circle with no animation", function(assert) {
+        var el = $('<div>').appendTo('#qunit-fixture').circleProgress({
+                value: 0.5,
+                animation: false
+            }),
+            canvas = el.circleProgress('widget'),
+            defaultSize = 100;
+
+        assert.pixelCloseHex(canvas, 1, defaultSize / 2 - 1, '#3aeabb', 0.05);
+        assert.pixelCloseHex(canvas, defaultSize - 1, defaultSize / 2 - 1, '#fdd250', 0.05);
+    });
+} else {
+    QUnit.test("Your browser doesn't support Canvas", function(assert) {
+        assert.ok(true, "That's fine");
+    });
 }
