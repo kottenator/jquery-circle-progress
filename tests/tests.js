@@ -11,8 +11,8 @@ if (Modernizr.canvas) {
         assert.equal(canvas.tagName.toLowerCase(), 'canvas', "Method .circleProgress('widget') returns HTMLCanvasElement");
         assert.equal($canvas.width(), defaultSize, "Actual width: 100 pixels");
         assert.equal($canvas.height(), defaultSize, "Actual height: 100 pixels");
-        assert.pixelRGBA(canvas, 0, defaultSize / 2, 'rgba(0, 0, 0, 0.1)');
-        assert.pixelRGBA(canvas, defaultThickness - 1, defaultSize / 2, 'rgba(0, 0, 0, 0.1)');
+        assert.pixelCloseRGBA(canvas, 0, defaultSize / 2, 'rgba(0, 0, 0, 0.1)', 0.05);
+        assert.pixelCloseRGBA(canvas, defaultThickness - 1, defaultSize / 2, 'rgba(0, 0, 0, 0.1)', 0.05);
         assert.pixelRGBA(canvas, defaultThickness + 1, defaultSize / 2, 'rgba(0, 0, 0, 0)');
     });
 

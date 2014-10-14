@@ -24,12 +24,12 @@
 
         maxDiff = maxDiff || 0;
 
-        var actualDiff = Math.max(
-            Math.abs(data[0] - expectedData[0]) / 255,
-            Math.abs(data[1] - expectedData[1]) / 255,
-            Math.abs(data[2] - expectedData[2]) / 255,
+        var actualDiff = (
+            Math.abs(data[0] - expectedData[0]) / 255 +
+            Math.abs(data[1] - expectedData[1]) / 255 +
+            Math.abs(data[2] - expectedData[2]) / 255 +
             Math.abs(data[3] - expectedData[3]) / 255
-        );
+        ) / 4;
 
         var result = actualDiff <= maxDiff;
 
@@ -51,12 +51,12 @@
             parseInt(s[0], 10),
             parseInt(s[1], 10),
             parseInt(s[2], 10),
-            Math.round(s[3] * 255)
+            s[3] * 255
         ];
     }
 
     function _dumpRGBA(data) {
-        return 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + Math.round(data[3] / 255 * 100) / 100 + ')';
+        return 'rgba(' + data[0] + ', ' + data[1] + ', ' + data[2] + ', ' + data[3] / 255 + ')';
     }
 
     function _parseHex(s) {
