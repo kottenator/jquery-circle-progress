@@ -1,8 +1,12 @@
+var output = $('#qunit-fixture');
+if (!output[0])
+    output = $('body');
+
 if (Modernizr.canvas) {
     QUnit.module("Layout tests, no animation");
 
     QUnit.test("Test circle with value = 0 (without any options)", function(assert) {
-        var el = $('<div>').appendTo('#qunit-fixture').circleProgress({ value: 0 }),
+        var el = $('<div>').appendTo(output).circleProgress({ value: 0 }),
             canvas = el.circleProgress('widget'),
             $canvas = $(canvas),
             defaultSize = 100,
@@ -19,7 +23,7 @@ if (Modernizr.canvas) {
     });
 
     QUnit.test("Test circle with value = 0.5 and default fill", function(assert) {
-        var el = $('<div>').appendTo('#qunit-fixture').circleProgress({
+        var el = $('<div>').appendTo(output).circleProgress({
                 value: 0.5,
                 animation: false
             }),
@@ -37,7 +41,7 @@ if (Modernizr.canvas) {
     });
 
     QUnit.test("Test circle with value = 0.5 and solid fill", function(assert) {
-        var el = $('<div>').appendTo('#qunit-fixture').circleProgress({
+        var el = $('<div>').appendTo(output).circleProgress({
                 value: 0.5,
                 fill: { color: '#ff0000' },
                 animation: false
