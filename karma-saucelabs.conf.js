@@ -22,7 +22,8 @@ module.exports = function(config) {
         },
         'android-4': {
             base: 'SauceLabs',
-            device: 'motorola droid razr emulator',
+            browserName: 'android',
+            device: 'Motorola Droid Razr Emulator',
             platform: "Linux",
             version: "4.0"
         }
