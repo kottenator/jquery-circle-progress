@@ -43,7 +43,7 @@ You should specify options like in usage example above.
 | startAngle | Initial angle (for `0` value) <br> Default: `-Math.PI` |
 | reverse | Reverse animation and arc draw<br> Default: `false` |
 | thickness | Width of the arc. By default it's automatically calculated as 1/14 of `size` but you may set your own number <br> Default: `"auto"` |
-| fill | The arc fill config. You may specify next: <br>- `{ gradient: ["red", "green", "blue"] }` <br>- `{ color: "#ff1e41" }` <br>- `{ image: "http://i.imgur.com/pT0i89v.png" }`<br>- `{ color: "lime", image: "http://i.imgur.com/pT0i89v.png" }` <br> Default: `{ gradient: ["#3aeabb", "#fdd250"] }` |
+| fill | The arc fill config. You may specify next: <br>- `{ gradient: ["red", "green", "blue"] }` <br>- `{ color: "#ff1e41" }` <br>- `{ image: "http://i.imgur.com/pT0i89v.png" }`<br>- `{ image: imageInstance }`<br>- `{ color: "lime", image: "http://i.imgur.com/pT0i89v.png" }` <br> Default: `{ gradient: ["#3aeabb", "#fdd250"] }` |
 | emptyFill | Color of the "empty" arc. Only a color fill supported by now <br> Default: `"rgba(0, 0, 0, .1)"` |
 | animation | Animation config. See [jQuery animations](http://api.jquery.com/animate/). <br> You may also set it to `false` <br> Default: `{ duration: 1200, ease: "circleProgressEase" }`  <br> `"circleProgressEase"` *is just a ease-in-out-cubic easing* |
 | animationStartValue | Default animation starts at `0.0` and ends at specified `value`. Let's call this direct animation. If you want to make reversed animation then you should set `animationStartValue` to `1.0`. Also you may specify any other value from `0.0` to `1.0` <br> Default: `0.0`
