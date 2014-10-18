@@ -14,17 +14,23 @@ module.exports = function(config) {
             browserName: 'internet explorer',
             version: '9'
         },
+        'safari-5': {
+            base: 'SauceLabs',
+            platform: "OS X 10.6",
+            browserName: 'safari',
+            version: '5'
+        },
         'ios-6': {
             base: 'SauceLabs',
-            browserName: 'iphone',
             platform: "OS X 10.8",
+            browserName: 'iphone',
             version: "6.0"
         },
         'android-4': {
             base: 'SauceLabs',
-            browserName: 'android',
-            device: 'Motorola Droid Razr Emulator',
             platform: "Linux",
+            device: 'Motorola Droid Razr Emulator',
+            browserName: 'android',
             version: "4.0"
         }
     };
@@ -32,6 +38,7 @@ module.exports = function(config) {
     config.set({
         frameworks: ['qunit'],
         files: [
+            { pattern: 'tests/images/circle.png', served: true, watched: false, included: false },
             'bower_components/jquery/dist/jquery.min.js',
             'bower_components/modernizr/modernizr.js',
             'dist/circle-progress.js',
