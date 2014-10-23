@@ -134,7 +134,7 @@ $.fn.circleProgress = function(config) {
         if (typeof config == 'undefined' || config == 'redraw') {
             options = data.options;
         } else {
-            options = $.extend({}, $.circleProgress.defaults, config);
+            options = $.extend({}, $.circleProgress.defaults, data.options, config);
             data.options = options;
         }
 
