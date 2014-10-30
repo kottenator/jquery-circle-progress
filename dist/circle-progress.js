@@ -3,34 +3,37 @@ jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
 
 URL: http://kottenator.github.io/jquery-circle-progress/
 Author: Rostyslav Bryzgunov <kottenator@gmail.com>
-Version: 1.0.0
+Version: 1.1.0
 License: MIT
 */
+(function($) {
+    function CircleProgress(config) {
+        this.init(config);
+    }
 
-$.circleProgress = {
-    // Default options (you may override them)
-    defaults: {
+    CircleProgress.prototype = {
+        //----------------------------------------------- public options -----------------------------------------------
         /**
          * This is the only required option. It should be from 0.0 to 1.0
-         * @type {float}
+         * @type {number}
          */
-        value: 0,
+        value: 0.0,
 
         /**
          * Size of the circle / canvas in pixels
-         * @type {int}
+         * @type {number}
          */
-        size: 100,
+        size: 100.0,
 
         /**
          * Initial angle for 0.0 value in radians
-         * @type {float}
+         * @type {number}
          */
         startAngle: -Math.PI,
-        
+
         /**
-         * Width of the arc. By default it's calculated as 1/14 of size, but you may set it explicitly in pixels
-         * type {int|'auto'}
+         * Width of the arc. By default it's auto-calculated as 1/14 of size, but you may set it explicitly in pixels
+         * @type {number|string}
          */
         thickness: 'auto',
 
@@ -44,6 +47,7 @@ $.circleProgress = {
          *     - { gradient: ['red', 'green', 'blue'] }
          *   - image:
          *     - { image: 'http://i.imgur.com/pT0i89v.png' }
+         *     - { image: imageObject }
          *     - { color: 'lime', image: 'http://i.imgur.com/pT0i89v.png' } - color displayed until the image is loaded
          */
         fill: {
@@ -68,207 +72,296 @@ $.circleProgress = {
          * Default animation starts at 0.0 and ends at specified `value`. Let's call this direct animation.
          * If you want to make reversed animation then you should set `animationStartValue` to 1.0.
          * Also you may specify any other value from 0.0 to 1.0
-         * @type {float}
+         * @type {number}
          */
-        animationStartValue: 0.0
-    },
+        animationStartValue: 0.0,
 
-    /**
-     * Reverse animation and arc draw
-     * @type {boolean}
-     */
-    reverse: false
-};
+        /**
+         * Reverse animation and arc draw
+         * @type {boolean}
+         */
+        reverse: false,
 
-// Renamed ease-in-out-cubic
-$.easing.circleProgressEasing = function(x, t, b, c, d) {
-    if ((t /= d / 2) < 1)
-        return c / 2 * t * t * t + b;
-    return c / 2 * ((t -= 2) * t * t + 2) + b;
-};
+        //--------------------------------------- private properties and methods ---------------------------------------
+        /**
+         * Container element. Should be passed into constructor config
+         * @private
+         * @type {jQuery}
+         */
+        el: null,
 
-/**
- * Draw animated circular progress bar.
- *
- * Appends <canvas> to the element or updates already appended one.
- *
- * If animated, throws 3 events:
- *
- *   - circle-animation-start(jqEvent)
- *   - circle-animation-progress(jqEvent, animationProgress, stepValue) - multiple event;
- *                                                                        animationProgress: from 0.0 to 1.0;
- *                                                                        stepValue: from 0.0 to value
- *   - circle-animation-end(jqEvent)
- *
- * @param config Example: { value: 0.75, size: 50, animation: false };
- *                you may set any of default options (see above);
- *                `animation` may be set to false;
- *                you may also use .circleProgress('widget') to get the canvas
- */
-$.fn.circleProgress = function(config) {
-    if (typeof config == 'string' && config != 'widget' && config != 'redraw')
-        throw Error("Only 2 commands supported: 'widget' and 'redraw'");
+        /**
+         * Canvas element. Automatically generated and prepended to the {@link CircleProgress.el container}
+         * @private
+         * @type {HTMLCanvasElement}
+         */
+        canvas: null,
 
-    if (config == 'widget')
-        return this.data('circle-progress').widget;
+        /**
+         * 2D-context of the {@link CircleProgress.canvas canvas}
+         * @private
+         * @type {CanvasRenderingContext2D}
+         */
+        ctx: null,
 
-    return this.each(function() {
-        var el = $(this);
+        /**
+         * Radius of the outer circle. Automatically calculated as {@link CircleProgress.size} / 2
+         * @private
+         * @type {number}
+         */
+        radius: 0.0,
 
-        // Get/init data object
-        var dataName = 'circle-progress',
-            data = el.data(dataName);
+        /**
+         * Fill of the main arc. Automatically calculated, depending on {@link CircleProgress.fill} option
+         * @private
+         * @type {string|CanvasGradient|CanvasPattern}
+         */
+        arcFill: null,
 
-        if (!data) {
-            data = {
-                options: null,
-                widget: null
-            };
+        /**
+         * Last rendered frame value
+         * @private
+         * @type {number}
+         */
+        lastFrameValue: 0.0,
 
-            el.data(dataName, data);
-        }
+        /**
+         * @private
+         * @param {object} config Config
+         */
+        init: function(config) {
+            $.extend(this, config);
+            this.radius = this.size / 2;
+            this.initWidget();
+            this.initFill();
+            this.draw();
+        },
 
-        // Get/init options
-        var options;
+        /**
+         * @private
+         */
+        initWidget: function() {
+            var canvas = this.canvas = this.canvas || $('<canvas>').prependTo(this.el)[0];
+            canvas.width = this.size;
+            canvas.height = this.size;
+            this.ctx = canvas.getContext('2d');
+        },
 
-        if (typeof config == 'undefined' || config == 'redraw') {
-            options = data.options;
-        } else {
-            options = $.extend({}, $.circleProgress.defaults, config);
-            data.options = options;
-        }
+        /**
+         * This method sets {@link CircleProgress.arcFill}
+         * It could do this async (on image load)
+         * @private
+         */
+        initFill: function() {
+            var self = this,
+                fill = this.fill,
+                ctx = this.ctx,
+                size = this.size;
 
-        var size = options.size,
-            radius = size / 2,
-            thickness = size / 14,
-            value = options.value,
-            startAngle = options.startAngle,
-            emptyArcFill = options.emptyFill,
-            animationStartValue = options.animationStartValue,
-            arcFill;
+            if (!fill)
+                throw Error("The fill is not specified!");
 
-        if ($.isNumeric(options.thickness))
-            thickness = options.thickness;
+            if (fill.color)
+                this.arcFill = fill.color;
 
-        // Prepare canvas
-        var canvas = data.widget;
-
-        if (!canvas) {
-            canvas = $('<canvas>').prependTo(el)[0];
-            data.widget = canvas;
-        }
-
-        canvas.width = size;
-        canvas.height = size;
-
-        var ctx = canvas.getContext('2d');
-
-        if (!options.fill)
-            throw Error("The fill is not specified!");
-
-        if (options.fill.color)
-            arcFill = options.fill.color;
-
-        if (options.fill.gradient) {
-            var gr = options.fill.gradient;
-            if (gr.length == 1) {
-                arcFill = gr[0];
-            } else if (gr.length > 1) {
-                var lg = ctx.createLinearGradient(0, 0, size, 0);
-                for (var i = 0; i < gr.length; i++)
-                    lg.addColorStop(i / (gr.length - 1), gr[i]);
-                arcFill = lg;
-            }
-        }
-
-        if (options.fill.image) {
-            var img;
-
-            if (options.fill.image instanceof Image) {
-                img = options.fill.image;
-            } else {
-                img = new Image();
-                img.src = options.fill.image;
+            if (fill.gradient) {
+                var gr = fill.gradient;
+                if (gr.length == 1) {
+                    this.arcFill = gr[0];
+                } else if (gr.length > 1) {
+                    var lg = ctx.createLinearGradient(0, 0, size, 0);
+                    for (var i = 0; i < gr.length; i++)
+                        lg.addColorStop(i / (gr.length - 1), gr[i]);
+                    this.arcFill = lg;
+                }
             }
 
-            if (img.complete)
-                setImageBG();
+            if (fill.image) {
+                var img;
+
+                if (fill.image instanceof Image) {
+                    img = fill.image;
+                } else {
+                    img = new Image();
+                    img.src = fill.image;
+                }
+
+                if (img.complete)
+                    setImageFill();
+                else
+                    img.onload = setImageFill;
+            }
+
+            function setImageFill() {
+                var bg = $('<canvas>')[0];
+                bg.width = self.size;
+                bg.height = self.size;
+                bg.getContext('2d').drawImage(img, 0, 0, size, size);
+                self.arcFill = self.ctx.createPattern(bg, 'no-repeat');
+                self.drawFrame(self.lastFrameValue);
+            }
+        },
+
+        draw: function() {
+            if (this.animation)
+                this.drawAnimated(this.value);
             else
-                img.onload = setImageBG();
-        }
+                this.drawFrame(this.value);
+        },
 
-        if (options.animation)
-            drawAnimated(value);
-        else
-            draw(value);
+        /**
+         * @private
+         * @param {number} v Frame value
+         */
+        drawFrame: function(v) {
+            this.lastFrameValue = v;
+            this.ctx.clearRect(0, 0, this.size, this.size);
+            this.drawArc(v);
+            this.drawEmptyArc(v);
+        },
 
-        function setImageBG() {
-            var bg = $('<canvas>')[0];
-            bg.width = size;
-            bg.height = size;
-            bg.getContext('2d').drawImage(img, 0, 0, size, size);
-            arcFill = ctx.createPattern(bg, 'no-repeat');
+        /**
+         * @private
+         * @param {number} v Frame value
+         */
+        drawArc: function(v) {
+            var ctx = this.ctx,
+                r = this.radius,
+                t = this.getThickness(),
+                a = this.startAngle;
 
-            // we need to redraw the arc when there is no animation
-            if (!options.animation)
-                draw(value);
-        }
-
-        function draw(v) {
-            ctx.clearRect(0, 0, size, size);
-            drawArc(v);
-            drawEmptyArc(v);
-        }
-
-        function drawArc(v) {
             ctx.save();
             ctx.beginPath();
-            if (!options.reverse) {
-                ctx.arc(radius, radius, radius - thickness / 2, startAngle, startAngle + Math.PI * 2 * v);
+
+            if (!this.reverse) {
+                ctx.arc(r, r, r - t / 2, a, a + Math.PI * 2 * v);
             } else {
-                ctx.arc(radius, radius, radius - thickness / 2, startAngle - Math.PI * 2 * v, startAngle);
+                ctx.arc(r, r, r - t / 2, a - Math.PI * 2 * v, a);
             }
-            ctx.lineWidth = thickness;
-            ctx.strokeStyle = arcFill;
+
+            ctx.lineWidth = t;
+            ctx.strokeStyle = this.arcFill;
             ctx.stroke();
             ctx.restore();
-        }
+        },
 
-        function drawEmptyArc(v) {
-            ctx.save();
+        /**
+         * @private
+         * @param {number} v Frame value
+         */
+        drawEmptyArc: function(v) {
+            var ctx = this.ctx,
+                r = this.radius,
+                t = this.getThickness(),
+                a = this.startAngle;
+
             if (v < 1) {
+                ctx.save();
                 ctx.beginPath();
+
                 if (v <= 0) {
-                    ctx.arc(radius, radius, radius - thickness / 2, 0, Math.PI * 2);
+                    ctx.arc(r, r, r - t / 2, 0, Math.PI * 2);
                 } else {
-                    if (!options.reverse) {
-                        ctx.arc(radius, radius, radius - thickness / 2, startAngle + Math.PI * 2 * v, startAngle);
+                    if (!this.reverse) {
+                        ctx.arc(r, r, r - t / 2, a + Math.PI * 2 * v, a);
                     } else {
-                        ctx.arc(radius, radius, radius - thickness / 2, startAngle, startAngle - Math.PI * 2 * v);
+                        ctx.arc(r, r, r - t / 2, a, a - Math.PI * 2 * v);
                     }
                 }
-                ctx.lineWidth = thickness;
-                ctx.strokeStyle = emptyArcFill;
-                ctx.stroke();
-            }
-            ctx.restore();
-        }
 
-        function drawAnimated(value) {
+                ctx.lineWidth = t;
+                ctx.strokeStyle = this.emptyFill;
+                ctx.stroke();
+                ctx.restore();
+            }
+        },
+
+        /**
+         * @private
+         * @param {number} v Value
+         */
+        drawAnimated: function(v) {
+            var self = this,
+                el = this.el;
+
             el.trigger('circle-animation-start');
-            $(canvas)
+
+            $(this.canvas)
                 .stop(true, true)
                 .css({ animationProgress: 0 })
-                .animate({ animationProgress: 1 }, $.extend({}, options.animation, {
+                .animate({ animationProgress: 1 }, $.extend({}, this.animation, {
                     step: function(animationProgress) {
-                        var stepValue = animationStartValue * (1 - animationProgress) + value * animationProgress;
-                        draw(stepValue);
+                        var stepValue = self.animationStartValue * (1 - animationProgress) + v * animationProgress;
+                        self.drawFrame(stepValue);
                         el.trigger('circle-animation-progress', [animationProgress, stepValue]);
                     },
                     complete: function() {
                         el.trigger('circle-animation-end');
                     }
                 }));
+        },
+
+        /**
+         * @protected
+         * @returns {number}
+         */
+        getThickness: function() {
+            return $.isNumeric(this.thickness) ? this.thickness : this.size / 14;
         }
-    });
-};
+    };
+
+    //-------------------------------------------- Initiating jQuery plugin --------------------------------------------
+    $.circleProgress = {
+        // Default options (you may override them)
+        defaults: CircleProgress.prototype
+    };
+
+    // ease-in-out-cubic
+    $.easing.circleProgressEasing = function(x, t, b, c, d) {
+        if ((t /= d / 2) < 1)
+            return c / 2 * t * t * t + b;
+        return c / 2 * ((t -= 2) * t * t + 2) + b;
+    };
+
+    /**
+     * Draw animated circular progress bar.
+     *
+     * Appends <canvas> to the element or updates already appended one.
+     *
+     * If animated, throws 3 events:
+     *
+     *   - circle-animation-start(jqEvent)
+     *   - circle-animation-progress(jqEvent, animationProgress, stepValue) - multiple event;
+     *                                                                        animationProgress: from 0.0 to 1.0;
+     *                                                                        stepValue: from 0.0 to value
+     *   - circle-animation-end(jqEvent)
+     *
+     * @param config Example: { value: 0.75, size: 50, animation: false };
+     *                you may set any of public options;
+     *                `animation` may be set to false;
+     *                you may also use .circleProgress('widget') to get the canvas
+     */
+    $.fn.circleProgress = function(config) {
+        var dataName = 'circle-progress';
+
+        if (config == 'widget') {
+            var data = this.data(dataName);
+            return data && data.canvas;
+        }
+
+        return this.each(function() {
+            var el = $(this),
+                instance = el.data(dataName),
+                cfg = $.isPlainObject(config) ? config : {};
+
+            if (instance) {
+                instance.init(cfg);
+                instance.draw();
+            } else {
+                cfg.el = el;
+                instance = new CircleProgress(cfg);
+                el.data(dataName, instance);
+            }
+        });
+    };
+})(jQuery);

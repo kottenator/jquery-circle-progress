@@ -1,6 +1,6 @@
 {
     "name": "jquery-circle-progress",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "Rostyslav Bryzgunov <kottenator@gmail.com>",
     "description": "Plugin to draw animated circular progress bars",
     "license": "MIT",
