@@ -74,11 +74,17 @@ $('#circle').circleProgress({ value: 0.5 });
 var canvas = $('#circle').circleProgress('widget');
 ```
 
+You can get the `CircleProgress` instance:
+```js
+var instance = $('#circle').data('circle-progress');
+```
+
 You can redraw existing circle *(but only if the widget is already inited)*:
 ```js
 $('#circle').circleProgress({ value: 0.5, fill: { color: 'orange' }});
-$('#circle').circleProgress('redraw'); // will use current configuration and redraw the circle
+$('#circle').circleProgress('redraw'); // use current configuration and redraw
 $('#circle').circleProgress(); // alias for 'redraw'
+$('#circle').circleProgress({ size: 150 }); // set new size and redraw
 ```
 
 You can change the default options:

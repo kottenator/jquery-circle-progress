@@ -3,7 +3,7 @@ jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
 
 URL: http://kottenator.github.io/jquery-circle-progress/
 Author: Rostyslav Bryzgunov <kottenator@gmail.com>
-Version: 1.1.0
+Version: 1.1.1
 License: MIT
 */
 (function($) {
@@ -82,51 +82,56 @@ License: MIT
          */
         reverse: false,
 
-        //--------------------------------------- private properties and methods ---------------------------------------
+        //-------------------------------------- protected properties and methods --------------------------------------
+        /**
+         * @protected
+         */
+        constructor: CircleProgress,
+
         /**
          * Container element. Should be passed into constructor config
-         * @private
+         * @protected
          * @type {jQuery}
          */
         el: null,
 
         /**
          * Canvas element. Automatically generated and prepended to the {@link CircleProgress.el container}
-         * @private
+         * @protected
          * @type {HTMLCanvasElement}
          */
         canvas: null,
 
         /**
          * 2D-context of the {@link CircleProgress.canvas canvas}
-         * @private
+         * @protected
          * @type {CanvasRenderingContext2D}
          */
         ctx: null,
 
         /**
          * Radius of the outer circle. Automatically calculated as {@link CircleProgress.size} / 2
-         * @private
+         * @protected
          * @type {number}
          */
         radius: 0.0,
 
         /**
          * Fill of the main arc. Automatically calculated, depending on {@link CircleProgress.fill} option
-         * @private
+         * @protected
          * @type {string|CanvasGradient|CanvasPattern}
          */
         arcFill: null,
 
         /**
          * Last rendered frame value
-         * @private
+         * @protected
          * @type {number}
          */
         lastFrameValue: 0.0,
 
         /**
-         * @private
+         * Init/re-init the widget
          * @param {object} config Config
          */
         init: function(config) {
@@ -138,7 +143,7 @@ License: MIT
         },
 
         /**
-         * @private
+         * @protected
          */
         initWidget: function() {
             var canvas = this.canvas = this.canvas || $('<canvas>').prependTo(this.el)[0];
@@ -150,7 +155,7 @@ License: MIT
         /**
          * This method sets {@link CircleProgress.arcFill}
          * It could do this async (on image load)
-         * @private
+         * @protected
          */
         initFill: function() {
             var self = this,
@@ -210,7 +215,7 @@ License: MIT
         },
 
         /**
-         * @private
+         * @protected
          * @param {number} v Frame value
          */
         drawFrame: function(v) {
@@ -221,7 +226,7 @@ License: MIT
         },
 
         /**
-         * @private
+         * @protected
          * @param {number} v Frame value
          */
         drawArc: function(v) {
@@ -246,7 +251,7 @@ License: MIT
         },
 
         /**
-         * @private
+         * @protected
          * @param {number} v Frame value
          */
         drawEmptyArc: function(v) {
@@ -277,7 +282,7 @@ License: MIT
         },
 
         /**
-         * @private
+         * @protected
          * @param {number} v Value
          */
         drawAnimated: function(v) {
@@ -356,7 +361,6 @@ License: MIT
 
             if (instance) {
                 instance.init(cfg);
-                instance.draw();
             } else {
                 cfg.el = el;
                 instance = new CircleProgress(cfg);
