@@ -8,10 +8,6 @@ jQuery Plugin to draw animated circular progress bars like this:
 
 Check out [more examples](http://kottenator.github.io/jquery-circle-progress/)!
 
-Status
-------
-Often people look at "last updated" on GitHub. And if it was long ago, they don't trust such project. But project is alive, it has no bugs, it works just fine. So I will update README time to time, when I have no better tasks to do :)
-
 Install
 -------
 Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases)
@@ -95,3 +91,7 @@ You can change the default options:
 ```js
 $.circleProgress.defaults.size = 50;
 ```
+
+#### Status
+
+Often people look at "last updated" on GitHub. And if it was long ago, they don't trust such project. But project is alive, it has no bugs, it works just fine. So I will update README time to time, when I have no better tasks to do :)
