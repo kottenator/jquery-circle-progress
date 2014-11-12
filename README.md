@@ -92,6 +92,6 @@ You can change the default options:
 $.circleProgress.defaults.size = 50;
 ```
 
-#### Status
-
+Status
+------
 Often people look at "last updated" on GitHub. And if it was long ago, they don't trust such project. But project is alive, it has no bugs, it works just fine. So I will update README time to time, when I have no better tasks to do :)
