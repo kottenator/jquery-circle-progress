@@ -16,7 +16,7 @@ or `bower install jquery-circle-progress`
 Usage
 -----
 ```html
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="jquery-circle-progress/dist/circle-progress.js"></script>
 
 <div id="circle"></div>
