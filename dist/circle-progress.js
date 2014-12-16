@@ -42,16 +42,18 @@ License: MIT
          *   - solid color:
          *     - { color: '#3aeabb' }
          *     - { color: 'rgba(255, 255, 255, .3)' }
-         *   - linear gradient (left to right):
+         *   - linear gradient:
          *     - { gradient: ['#3aeabb', '#fdd250'] }
          *     - { gradient: ['red', 'green', 'blue'] }
+         *     - { gradient: ['red', 'green'], gradientDirection: 'rtl' } - allowed gradient directions are ltr, rtl, ttb, btt
          *   - image:
          *     - { image: 'http://i.imgur.com/pT0i89v.png' }
          *     - { image: imageObject }
          *     - { color: 'lime', image: 'http://i.imgur.com/pT0i89v.png' } - color displayed until the image is loaded
          */
         fill: {
-            gradient: ['#3aeabb', '#fdd250']
+            gradient: ['#3aeabb', '#fdd250'],
+            gradientDirection: 'ltr'
         },
 
         /**
@@ -174,7 +176,25 @@ License: MIT
                 if (gr.length == 1) {
                     this.arcFill = gr[0];
                 } else if (gr.length > 1) {
-                    var lg = ctx.createLinearGradient(0, 0, size, 0);
+                    var gd = fill.gradientDirection || '',
+                        lg;
+
+                    switch (gd.toLowerCase()) {
+                        case 'ttb':
+                            lg = ctx.createLinearGradient(0, 0, 0, size);
+                            break;
+                        case 'btt':
+                            lg = ctx.createLinearGradient(0, size, 0, 0);
+                            break;
+                        case 'rtl':
+                            lg = ctx.createLinearGradient(size, 0, 0, 0);
+                            break;
+                        case 'ltr':
+                        default:
+                            lg = ctx.createLinearGradient(0, 0, size, 0);
+                            break;
+                    }
+
                     for (var i = 0; i < gr.length; i++)
                         lg.addColorStop(i / (gr.length - 1), gr[i]);
                     this.arcFill = lg;
