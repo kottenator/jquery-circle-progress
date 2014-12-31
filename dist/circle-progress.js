@@ -3,7 +3,7 @@ jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
 
 URL: http://kottenator.github.io/jquery-circle-progress/
 Author: Rostyslav Bryzgunov <kottenator@gmail.com>
-Version: 1.1.1
+Version: 1.1.2
 License: MIT
 */
 (function($) {
@@ -43,8 +43,8 @@ License: MIT
          *     - { color: '#3aeabb' }
          *     - { color: 'rgba(255, 255, 255, .3)' }
          *   - linear gradient (left to right):
-         *     - { gradient: ['#3aeabb', '#fdd250'] }
-         *     - { gradient: ['red', 'green', 'blue'] }
+         *     - { gradient: ['#3aeabb', '#fdd250'], gradientAngle: Math.PI / 4 }
+         *     - { gradient: ['red', 'green', 'blue'], gradientDirection: [x0, y0, x1, y1] }
          *   - image:
          *     - { image: 'http://i.imgur.com/pT0i89v.png' }
          *     - { image: imageObject }
@@ -81,6 +81,13 @@ License: MIT
          * @type {boolean}
          */
         reverse: false,
+
+        /**
+         * Arc line cap ('butt' (default), 'round' and 'square')
+         * Read more: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.lineCap
+         * @type {string}
+         */
+        lineCap: 'butt',
 
         //-------------------------------------- protected properties and methods --------------------------------------
         /**
@@ -171,12 +178,32 @@ License: MIT
 
             if (fill.gradient) {
                 var gr = fill.gradient;
+
                 if (gr.length == 1) {
                     this.arcFill = gr[0];
                 } else if (gr.length > 1) {
-                    var lg = ctx.createLinearGradient(0, 0, size, 0);
-                    for (var i = 0; i < gr.length; i++)
-                        lg.addColorStop(i / (gr.length - 1), gr[i]);
+                    var ga = fill.gradientAngle || 0, // gradient direction angle; 0 by default
+                        gd = fill.gradientDirection || [
+                            size / 2 * (1 - Math.cos(ga)), // x0
+                            size / 2 * (1 + Math.sin(ga)), // y0
+                            size / 2 * (1 + Math.cos(ga)), // x1
+                            size / 2 * (1 - Math.sin(ga))  // y1
+                        ];
+
+                    var lg = ctx.createLinearGradient.apply(ctx, gd);
+
+                    for (var i = 0; i < gr.length; i++) {
+                        var color = gr[i],
+                            pos = i / (gr.length - 1);
+
+                        if ($.isArray(color)) {
+                            pos = color[1];
+                            color = color[0];
+                        }
+
+                        lg.addColorStop(pos, color);
+                    }
+
                     this.arcFill = lg;
                 }
             }
@@ -221,8 +248,8 @@ License: MIT
         drawFrame: function(v) {
             this.lastFrameValue = v;
             this.ctx.clearRect(0, 0, this.size, this.size);
-            this.drawArc(v);
             this.drawEmptyArc(v);
+            this.drawArc(v);
         },
 
         /**
@@ -245,6 +272,7 @@ License: MIT
             }
 
             ctx.lineWidth = t;
+            ctx.lineCap = this.lineCap;
             ctx.strokeStyle = this.arcFill;
             ctx.stroke();
             ctx.restore();
