@@ -38,6 +38,12 @@ License: MIT
         thickness: 'auto',
 
         /**
+         * Border around the arc. This is applied to the empty circle, and is added to the thickness
+         * @type {number|string}
+         */
+        border: 0.0,
+
+        /**
          * Fill of the arc. You may set it to:
          *   - solid color:
          *     - { color: '#3aeabb' }
@@ -266,9 +272,9 @@ License: MIT
             ctx.beginPath();
 
             if (!this.reverse) {
-                ctx.arc(r, r, r - t / 2, a, a + Math.PI * 2 * v);
+                ctx.arc(r, r, r - t / 2 - this.border, a, a + Math.PI * 2 * v);
             } else {
-                ctx.arc(r, r, r - t / 2, a - Math.PI * 2 * v, a);
+                ctx.arc(r, r, r - t / 2 - this.border, a - Math.PI * 2 * v, a);
             }
 
             ctx.lineWidth = t;
@@ -285,16 +291,19 @@ License: MIT
         drawEmptyArc: function(v) {
             var ctx = this.ctx,
                 r = this.radius,
-                t = this.getThickness(),
+                t = this.getThickness() + (this.border * 2),
                 a = this.startAngle;
 
             if (v < 1) {
                 ctx.save();
                 ctx.beginPath();
 
-                if (v <= 0) {
+                if (this.border > 0 || v <= 0) {
+                    // draw the empty circle a full 360 degrees
+                    // this is necessary if there is a border
                     ctx.arc(r, r, r - t / 2, 0, Math.PI * 2);
                 } else {
+                    // draw the empty circle as an arc
                     if (!this.reverse) {
                         ctx.arc(r, r, r - t / 2, a + Math.PI * 2 * v, a);
                     } else {

@@ -6,9 +6,11 @@
             var canvas = createCircle({ value: 0 }),
                 $canvas = $(canvas),
                 defaultSize = 100,
+                defaultBorder = 0.0,
                 defaultThickness = parseInt(defaultSize / 14); // 7
 
             assert.equal($.circleProgress.defaults.size, defaultSize, "Default circle size: 100 pixels");
+            assert.equal($.circleProgress.defaults.border, defaultBorder, "Default circle border: 0 pixels");
             assert.equal($.circleProgress.defaults.thickness, 'auto', "Default circle thickness: 'auto' (i.e. 1/14 of size)");
             assert.equal(canvas.tagName.toLowerCase(), 'canvas', "Method .circleProgress('widget') returns HTMLCanvasElement");
             assert.equal($canvas.width(), defaultSize, "Default width: 100 pixels");
@@ -46,6 +48,19 @@
 
             assert.pixelHex(canvas, 1, defaultSize / 2 - 1, color);
             assert.pixelHex(canvas, defaultSize - 1, defaultSize / 2 - 1, color);
+        });
+
+        QUnit.test("Test circle with border = 1", function(assert) {
+            var color = '#ff0000',
+                thickness = 10,
+                canvas = createCircle({
+                    border: 1,
+                    thickness: 10,
+                    animation: false
+                }),
+                defaultSize = $.circleProgress.defaults.size;
+
+            assert.pixelCloseRGBA(canvas, thickness + 1, defaultSize / 2, 'rgba(0, 0, 0, 0.1)', 0.01);
         });
 
         QUnit.module("Layout tests with animation");

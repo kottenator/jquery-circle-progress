@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jquery-circle-progress example</title>
+</head>
+<body>
+	<div id="progress"></div>
+
+	<script src="../bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+	<script src="../dist/circle-progress.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$('#progress').circleProgress({
+			value: 0.65,
+			emptyFill: '#E8DDCB',
+			thickness: 30,
+			border: 5,
+			size: 200,
+			fill: {
+				color: '#036564'
+			}
+		});
+	</script>
+</body>
+</html>
