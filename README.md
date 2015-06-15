@@ -69,18 +69,43 @@ I have not implemented any fallback / polyfill for unsupported browsers yet
 
 Misc
 ----
-You can get the `<canvas>` *(but only if the widget is already inited)*:
+
+#### Get/set value
+
+Get it:
 ```js
-$('#circle').circleProgress({ value: 0.5 });
-var canvas = $('#circle').circleProgress('widget');
+$('.circle').circleProgress({ value: 0.5 });
+var value = $('.circle').circleProgress('value'); // 0.5
 ```
 
-You can get the `CircleProgress` instance:
+It will return the *first* item's value (by *first* I mean when `$('.circle').length >= 1`).
+*It works only if the widget is already inited. Raises an error otherwise*.
+
+Set it:
+```js
+$('.circle').circleProgress('value', 0.75); // set value to 0.75 & animate the change 
+```
+
+It will update *all* selected items value and animate the change. 
+It doesn't *redraw* the widget - it updates the value & animates the changes.
+For example, it may be an AJAX loading indicator, which shows the loading progress.
+
+#### Get `<canvas>`
+
+```js
+$('.circle').circleProgress({ value: 0.5 });
+var canvas = $('.circle').circleProgress('widget');
+```
+
+It will return the *first* item's `<canvas>` (by *first* I mean when `$('.circle').length >= 1`).
+*It works only if the widget is already inited. Raises an error otherwise*.
+
+#### Get `CircleProgress` instance
 ```js
 var instance = $('#circle').data('circle-progress');
 ```
 
-You can redraw existing circle *(but only if the widget is already inited)*:
+#### Redraw existing circle
 ```js
 $('#circle').circleProgress({ value: 0.5, fill: { color: 'orange' }});
 $('#circle').circleProgress('redraw'); // use current configuration and redraw
@@ -88,11 +113,38 @@ $('#circle').circleProgress(); // alias for 'redraw'
 $('#circle').circleProgress({ size: 150 }); // set new size and redraw
 ```
 
-You can change the default options:
+*It works only if the widget is already inited. Raises an error otherwise*.
+
+#### Change default options
 ```js
 $.circleProgress.defaults.size = 50;
 ```
 
-Status
-------
-Often people look at "last updated" on GitHub. And if it was long ago, they don't trust such project. But project is alive, it has no bugs, it works just fine. So I will update README time to time, when I have no better tasks to do :)
+FAQ
+---
+
+### How to start circle animation only when it appears in browser's view (on scrolling)?
+
+Here is [my proposed solution](https://github.com/kottenator/jquery-circle-progress/issues/8).
+
+### How to make auto-width / support Retina?
+
+You can do it [in the following way](https://github.com/kottenator/jquery-circle-progress/issues/17).
+
+### What if I need it to run in IE8?
+
+There is no full-feature support for IE8 (actually, I didn't imlpement IE8 support at all). But you may follow [my recommendations](https://github.com/kottenator/jquery-circle-progress/issues/35).
+
+### How to stop the animation?
+
+Here is [what you can do](https://github.com/kottenator/jquery-circle-progress/issues/37).
+
+### May I customize the shape somehow?
+
+It's a bit "tricky" but possible. Here is my little collection:
+- arc layout: [demo](http://jsbin.com/gijeba/3/edit?html,js,output), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/27)
+- thin "empty" circle - [demo](http://output.jsbin.com/jeranu/1/), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/24)
+- stacked circles - [demo](http://output.jsbin.com/zepabe/2/), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/22)
+- "dot" at the start - [demo](http://output.jsbin.com/bivowi/3), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/21)
+- progress bar around an image - [demo](http://output.jsbin.com/pofobe/2/), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/18)
+- triangle layout - [demo](http://output.jsbin.com/vatuza/1/)
