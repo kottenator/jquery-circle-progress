@@ -49,6 +49,27 @@ You should specify options like in usage example above.
 | animation | Animation config. See [jQuery animations](http://api.jquery.com/animate/). <br> You may also set it to `false` <br> Default: `{ duration: 1200, easing: "circleProgressEase" }`  <br> `"circleProgressEase"` *is just a ease-in-out-cubic easing* |
 | animationStartValue | Default animation starts at `0.0` and ends at specified `value`. Let's call this direct animation. If you want to make reversed animation then you should set `animationStartValue` to `1.0`. Also you may specify any other value from `0.0` to `1.0` <br> Default: `0.0`
 
+From `v1.1.3` you can specify any config option as HTML `data-` attribute. 
+
+It will work *only on init*, i.e. after the widget is inited you may update its properties only via `.circleProgress({/*...*/})` method. `data-` attributes will be ignored. 
+
+Also, object options like `"fill"` or `"animation"` should be in valid JSON format:
+
+```html
+<div
+    class="circle"
+    data-value="0.9"
+    data-size="60"
+    data-thickness="20"
+    data-animation-start-value="1.0"
+    data-fill="{
+        &quot;color&quot;: &quot;rgba(0, 0, 0, .3)&quot;,
+        &quot;image&quot;: &quot;http://i.imgur.com/pT0i89v.png&quot;
+    }"
+    data-reverse="true"
+></div>
+```
+
 Events
 ------
 When animation is enabled, there are 3 events available:
@@ -67,8 +88,8 @@ and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
 I have not implemented any fallback / polyfill for unsupported browsers yet
 *(i.e. for Internet Explorer 8 and older / misc browsers)*.
 
-Misc
-----
+API
+---
 
 #### Get/set value
 
@@ -123,23 +144,23 @@ $.circleProgress.defaults.size = 50;
 FAQ
 ---
 
-### How to start circle animation only when it appears in browser's view (on scrolling)?
+#### How to start circle animation only when it appears in browser's view (on scrolling)?
 
 Here is [my proposed solution](https://github.com/kottenator/jquery-circle-progress/issues/8).
 
-### How to make auto-width / support Retina?
+#### How to make auto-width / support Retina?
 
 You can do it [in the following way](https://github.com/kottenator/jquery-circle-progress/issues/17).
 
-### What if I need it to run in IE8?
+#### What if I need it to run in IE8?
 
 There is no full-feature support for IE8 (actually, I didn't imlpement IE8 support at all). But you may follow [my recommendations](https://github.com/kottenator/jquery-circle-progress/issues/35).
 
-### How to stop the animation?
+#### How to stop the animation?
 
 Here is [what you can do](https://github.com/kottenator/jquery-circle-progress/issues/37).
 
-### May I customize the shape somehow?
+#### May I customize the shape somehow?
 
 It's a bit "tricky" but possible. Here is my little collection:
 - arc layout: [demo](http://jsbin.com/gijeba/3/edit?html,js,output), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/27)
@@ -148,3 +169,5 @@ It's a bit "tricky" but possible. Here is my little collection:
 - "dot" at the start - [demo](http://output.jsbin.com/bivowi/3), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/21)
 - progress bar around an image - [demo](http://output.jsbin.com/pofobe/2/), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/18)
 - triangle layout - [demo](http://output.jsbin.com/vatuza/1/)
+
+All of that are quickly made snippets. I didn't write tests for them nor include them into "core" functionality. So use it on your own risk. However you may leave a comment in corresponding discussion if something is wrong.
