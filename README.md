@@ -49,11 +49,11 @@ You should specify options like in usage example above.
 | animation | Animation config. See [jQuery animations](http://api.jquery.com/animate/). <br> You may also set it to `false` <br> Default: `{ duration: 1200, easing: "circleProgressEase" }`  <br> `"circleProgressEase"` *is just a ease-in-out-cubic easing* |
 | animationStartValue | Default animation starts at `0.0` and ends at specified `value`. Let's call this direct animation. If you want to make reversed animation then you should set `animationStartValue` to `1.0`. Also you may specify any other value from `0.0` to `1.0` <br> Default: `0.0`
 
-From `v1.1.3` you can specify any config option as HTML `data-` attribute. 
+From version `1.1.3` you can specify any config option as HTML `data-` attribute. 
 
 It will work *only on init*, i.e. after the widget is inited you may update its properties only via `.circleProgress({/*...*/})` method. `data-` attributes will be ignored. 
 
-Also, object options like `"fill"` or `"animation"` should be in valid JSON format:
+Also, object options like `"fill"` or `"animation"` should be valid JSON (and don't forget about HTML-escaping):
 
 ```html
 <div
@@ -144,7 +144,7 @@ $.circleProgress.defaults.size = 50;
 FAQ
 ---
 
-#### How to start circle animation only when it appears in browser's view (on scrolling)?
+#### How to start the animation only when the circle appears in browser's view (on scrolling)?
 
 Here is [my proposed solution](https://github.com/kottenator/jquery-circle-progress/issues/8).
 
