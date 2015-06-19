@@ -168,6 +168,7 @@ It's a bit "tricky" but possible. Here is my little collection:
 - stacked circles - [demo](http://output.jsbin.com/zepabe/2/), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/22)
 - "dot" at the start - [demo](http://output.jsbin.com/bivowi/3), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/21)
 - progress bar around an image - [demo](http://output.jsbin.com/pofobe/2/), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/18)
+- flexible size, numbers inside - [demo](http://output.jsbin.com/gabeli/4), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/39)
 - triangle layout - [demo](http://output.jsbin.com/vatuza/1/)
 
 All of that are quickly made snippets. I didn't write tests for them nor include them into "core" functionality. So use it on your own risk. However you may leave a comment in corresponding discussion if something is wrong.
