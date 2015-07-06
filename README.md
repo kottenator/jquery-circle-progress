@@ -148,9 +148,9 @@ FAQ
 
 Here is [my proposed solution](https://github.com/kottenator/jquery-circle-progress/issues/8).
 
-#### How to make auto-width / support Retina?
+#### How to make the size flexible?
 
-You can do it [in the following way](https://github.com/kottenator/jquery-circle-progress/issues/17).
+E.g. for Retina support or for responsive design, you can do it [in the following way](https://github.com/kottenator/jquery-circle-progress/issues/17).
 
 #### What if I need it to run in IE8?
 
