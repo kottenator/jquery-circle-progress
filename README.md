@@ -4,7 +4,7 @@ jquery-circle-progress
 
 jQuery Plugin to draw animated circular progress bars like this:
 
-![image](http://i.imgur.com/zV5VUQG.png)
+![](http://i.imgur.com/zV5VUQG.png)
 
 Check out [more examples](http://kottenator.github.io/jquery-circle-progress/)! Or maybe the crazy [one](http://jsbin.com/vatuza/1/)?
 
@@ -162,13 +162,4 @@ Here is [what you can do](https://github.com/kottenator/jquery-circle-progress/i
 
 #### May I customize the shape somehow?
 
-It's a bit "tricky" but possible. Here is my little collection:
-- arc layout: [demo](http://jsbin.com/gijeba/3/edit?html,js,output), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/27)
-- thin "empty" circle - [demo](http://output.jsbin.com/jeranu/1/), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/24)
-- stacked circles - [demo](http://output.jsbin.com/zepabe/2/), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/22)
-- "dot" at the start - [demo](http://output.jsbin.com/bivowi/3), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/21)
-- progress bar around an image - [demo](http://output.jsbin.com/pofobe/2/), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/18)
-- flexible size, numbers inside - [demo](http://output.jsbin.com/gabeli/5), [discussion](https://github.com/kottenator/jquery-circle-progress/issues/39)
-- triangle layout - [demo](http://output.jsbin.com/vatuza/1/)
-
-All of that are quickly made snippets. I didn't write tests for them nor include them into "core" functionality. So use it on your own risk. However you may leave a comment in corresponding discussion if something is wrong.
+It's a bit "tricky" but possible. Here is [my little collection](https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts)
