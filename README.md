@@ -160,6 +160,10 @@ There is no full-feature support for IE8 (actually, I didn't imlpement IE8 suppo
 
 Here is [what you can do](https://github.com/kottenator/jquery-circle-progress/issues/37).
 
+#### Can I handle "click" event?
+
+It's not in the "core" but you can use [my example of mouse/touch events handling](http://output.jsbin.com/fetequ/3).
+
 #### May I customize the shape somehow?
 
-It's a bit "tricky" but possible. Here is [my little collection](https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts)
+It's a bit "tricky" but possible. Here is [my little collection](https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts).
