@@ -162,7 +162,7 @@ Here is [what you can do](https://github.com/kottenator/jquery-circle-progress/i
 
 #### Can I handle "click" event?
 
-It's not in the "core" but you can use [my example of mouse/touch events handling](http://output.jsbin.com/fetequ/3).
+It's not in the "core" but you can use [my example of mouse/touch events handling](http://output.jsbin.com/fetequ/5).
 
 #### May I customize the shape somehow?
 
