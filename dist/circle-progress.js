@@ -137,6 +137,14 @@ License: MIT
          */
         lastFrameValue: 0.0,
 
+
+        /**
+         * Threshold value if one should be represented
+         * if the value is set to 0.0 nothing is displayed
+         * otherwise a segment will be drawn at threshold value
+         */
+        threshold: 0.0,
+
         /**
          * Init/re-init the widget
          * @param {object} config - Config
@@ -239,6 +247,9 @@ License: MIT
                 this.drawAnimated(this.value);
             else
                 this.drawFrame(this.value);
+
+            if( this.threshold > 0)
+                this.drawThreshold( this.threshold);
         },
 
         /**
@@ -250,6 +261,29 @@ License: MIT
             this.ctx.clearRect(0, 0, this.size, this.size);
             this.drawEmptyArc(v);
             this.drawArc(v);
+        },
+
+        /**
+         * @protected
+         * @param v value of the threshold
+         */
+        drawThreshold: function(v) {
+            var ctx = this.ctx,
+                r = this.radius,
+                t = this.thickness / 4,
+                a = this.startAngle + Math.PI * 2 * v;
+
+            ctx.save();
+            ctx.beginPath();
+
+            ctx.moveTo(r + (r - 2 * this.thickness) * Math.cos(a), r + (r - 2 * this.thickness) * Math.sin(a));
+            ctx.lineTo(r + (r - this.thickness) * Math.cos(a), r + (r - this.thickness) * Math.sin(a));
+
+            ctx.lineWidth = t;
+            ctx.lineCap = this.lineCap;
+            ctx.strokeStyle = (v <= this.value ? this.arcFill : this.emptyFill);
+            ctx.stroke();
+            ctx.restore();
         },
 
         /**
