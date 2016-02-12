@@ -147,6 +147,7 @@ License: MIT
             this.initWidget();
             this.initFill();
             this.draw();
+            this.el.trigger('circle-inited');
         },
 
         /**
