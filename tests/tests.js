@@ -178,7 +178,7 @@
             });
         });
 
-        QUnit.asyncTest("Test it renders correctly on retina", function(assert) {
+        QUnit.test("Test it renders correctly on retina", function(assert) {
             /**
              * Mock devicePixelRatio
              */
@@ -189,17 +189,11 @@
                 size: 50
             });
 
-            assert.expect(2);
-
-            setTimeout(function() {
-                assert.equal(50 + 'px', $(canvas).css('width'));
-                assert.equal(100, canvas.width);
-
-                QUnit.start();
-            }, 1300);
+            assert.equal(50 + 'px', $(canvas).css('width'));
+            assert.equal(100, canvas.width);
         });
 
-        QUnit.asyncTest("Test it renders correctly on regular pixel density", function(assert) {
+        QUnit.test("Test it renders correctly on regular pixel density", function(assert) {
             /**
              * Mock devicePixelRatio
              */
@@ -210,14 +204,8 @@
                 size: 50
             });
 
-            assert.expect(2);
-
-            setTimeout(function() {
-                assert.equal(50 + 'px', $(canvas).css('height'));
-                assert.equal(50, canvas.width);
-
-                QUnit.start();
-            }, 1300);
+            assert.equal(50 + 'px', $(canvas).css('height'));
+            assert.equal(50, canvas.width);
         });
     } else {
         QUnit.test("Your browser doesn't support Canvas", function(assert) {
