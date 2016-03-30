@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 0.10
+  - 5.0.0
 before_script:
   - npm install -g bower karma-cli
   - bower install
