@@ -20,6 +20,12 @@ License: MIT
         value: 0.0,
 
         /**
+         * Empty fill value. Should be from 0.0 to 1.0
+         * @type {number}
+         */
+        emptyFillValue: 0.0,
+
+        /**
          * Size of the circle / canvas in pixels
          * @type {number}
          */
@@ -75,6 +81,8 @@ License: MIT
          * @type {number}
          */
         animationStartValue: 0.0,
+
+        emptyAnimationStartValue: 0.0,
 
         /**
          * Reverse animation and arc draw
@@ -136,6 +144,13 @@ License: MIT
          * @type {number}
          */
         lastFrameValue: 0.0,
+
+        /**
+         * Last rendered empty frame value
+         * @protected
+         * @type {number}
+         */
+        lastEmptyFrameValue: 0.0,
 
         /**
          * Init/re-init the widget
@@ -236,19 +251,21 @@ License: MIT
 
         draw: function() {
             if (this.animation)
-                this.drawAnimated(this.value);
+                this.drawAnimated(this.value, this.emptyFillValue);
             else
-                this.drawFrame(this.value);
+                this.drawFrame(this.value, this.emptyFillValue);
         },
 
         /**
          * @protected
          * @param {number} v - Frame value
+         * @param {number} e - Empty frame value
          */
-        drawFrame: function(v) {
+        drawFrame: function(v, e) {
             this.lastFrameValue = v;
+            this.lastEmptyFrameValue = e;
             this.ctx.clearRect(0, 0, this.size, this.size);
-            this.drawEmptyArc(v);
+            this.drawEmptyArc(e);
             this.drawArc(v);
         },
 
@@ -280,40 +297,35 @@ License: MIT
 
         /**
          * @protected
-         * @param {number} v - Frame value
+         * @param {number} e - Empty fill frame value
          */
-        drawEmptyArc: function(v) {
+        drawEmptyArc: function(e) {
             var ctx = this.ctx,
                 r = this.radius,
                 t = this.getThickness(),
                 a = this.startAngle;
 
-            if (v < 1) {
-                ctx.save();
-                ctx.beginPath();
+            ctx.save();
+            ctx.beginPath();
 
-                if (v <= 0) {
-                    ctx.arc(r, r, r - t / 2, 0, Math.PI * 2);
-                } else {
-                    if (!this.reverse) {
-                        ctx.arc(r, r, r - t / 2, a + Math.PI * 2 * v, a);
-                    } else {
-                        ctx.arc(r, r, r - t / 2, a, a - Math.PI * 2 * v);
-                    }
-                }
-
-                ctx.lineWidth = t;
-                ctx.strokeStyle = this.emptyFill;
-                ctx.stroke();
-                ctx.restore();
+            if (!this.reverse) {
+                ctx.arc(r, r, r - t / 2, a, a + Math.PI * 2 * e);
+            } else {
+                ctx.arc(r, r, r - t / 2, a - Math.PI * 2 * e, a);
             }
+
+            ctx.lineWidth = t;
+            ctx.strokeStyle = this.emptyFill;
+            ctx.stroke();
+            ctx.restore();
         },
 
         /**
          * @protected
          * @param {number} v - Value
+         * @param {number} e - Empty frame value
          */
-        drawAnimated: function(v) {
+        drawAnimated: function(v, e) {
             var self = this,
                 el = this.el,
                 canvas = $(this.canvas);
@@ -327,7 +339,8 @@ License: MIT
                 .animate({ animationProgress: 1 }, $.extend({}, this.animation, {
                     step: function (animationProgress) {
                         var stepValue = self.animationStartValue * (1 - animationProgress) + v * animationProgress;
-                        self.drawFrame(stepValue);
+                        var emptyStepValue = self.animationStartValue * (1 - animationProgress) + e * animationProgress;
+                        self.drawFrame(stepValue, emptyStepValue);
                         el.trigger('circle-animation-progress', [animationProgress, stepValue]);
                     }
                 }))
@@ -394,7 +407,7 @@ License: MIT
      * @param commandArgument - Some commands (like 'value') may require an argument
      */
     $.fn.circleProgress = function(configOrCommand, commandArgument) {
-        var dataName = 'circle-progress',
+        var dataName = 'circle-progress-' + Math.random().toString(36).substring(7),
             firstInstance = this.data(dataName);
 
         if (configOrCommand == 'widget') {
