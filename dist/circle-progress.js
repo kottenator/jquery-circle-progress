@@ -23,7 +23,7 @@ License: MIT
          * Empty fill value. Should be from 0.0 to 1.0
          * @type {number}
          */
-        emptyFillValue: 0.0,
+        emptyFillValue: 1.0,
 
         /**
          * Size of the circle / canvas in pixels
@@ -334,12 +334,29 @@ License: MIT
             canvas.stop(true, false);
             el.trigger('circle-animation-start');
 
+            if (v === this.lastFrameValue) {
+                // don't animate frame value
+                this.oldAnimationStartValue = this.animationStartValue
+                this.animationStartValue = this.lastFrameValue;
+                el.on('circle-animation-end', function() {
+                    self.animationStartValue = self.oldAnimationStartValue;
+                });
+            }
+            if (e === this.lastEmptyFrameValue) {
+                // don't animate empty frame value
+                this.oldEmptyFillStartValue = this.emptyAnimationStartValue;
+                this.emptyAnimationStartValue = this.lastEmptyFrameValue;
+                el.on('circle-animation-end', function() {
+                    self.emptyAnimationStartValue = self.oldEmptyAnimationStartValue;
+                });
+            }
+
             canvas
                 .css({ animationProgress: 0 })
                 .animate({ animationProgress: 1 }, $.extend({}, this.animation, {
                     step: function (animationProgress) {
                         var stepValue = self.animationStartValue * (1 - animationProgress) + v * animationProgress;
-                        var emptyStepValue = self.animationStartValue * (1 - animationProgress) + e * animationProgress;
+                        var emptyStepValue = self.emptyAnimationStartValue * (1 - animationProgress) + e * animationProgress;
                         self.drawFrame(stepValue, emptyStepValue);
                         el.trigger('circle-animation-progress', [animationProgress, stepValue]);
                     }
@@ -363,10 +380,21 @@ License: MIT
             return this.value;
         },
 
+        getEmptyValue: function() {
+            return this.emptyFillValue
+        },
+
         setValue: function(newValue) {
             if (this.animation)
                 this.animationStartValue = this.lastFrameValue;
             this.value = newValue;
+            this.draw();
+        },
+
+        setEmptyValue: function(newEmptyValue) {
+            if (this.animation)
+                this.emptyAnimationStartValue = this.lastEmptyFrameValue;
+            this.emptyFillValue = newEmptyValue;
             this.draw();
         }
     };
@@ -407,7 +435,7 @@ License: MIT
      * @param commandArgument - Some commands (like 'value') may require an argument
      */
     $.fn.circleProgress = function(configOrCommand, commandArgument) {
-        var dataName = 'circle-progress-' + Math.random().toString(36).substring(7),
+        var dataName = 'circle-progress',
             firstInstance = this.data(dataName);
 
         if (configOrCommand == 'widget') {
@@ -425,6 +453,19 @@ License: MIT
                 var newValue = arguments[1];
                 return this.each(function() {
                     $(this).data(dataName).setValue(newValue);
+                });
+            }
+        }
+
+        if (configOrCommand == 'emptyValue') {
+            if (!firstInstance)
+                throw Error('Calling "value" method on not initialized instance is forbidden');
+            if (typeof commandArgument == 'undefined') {
+                return firstInstance.getEmptyValue();
+            } else {
+                var newValue = arguments[1];
+                return this.each(function() {
+                    $(this).data(dataName).setEmptyValue(newValue);
                 });
             }
         }
