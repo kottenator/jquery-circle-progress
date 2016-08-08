@@ -148,7 +148,7 @@
             assert.expect(9);
             image.src = imageUrl;
 
-            $(image).load(function() {
+            $(image).on('load', function() {
                 var canvas = createCircle({
                     value: 0.5,
                     thickness: 20,
