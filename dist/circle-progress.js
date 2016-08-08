@@ -74,6 +74,8 @@ License: MIT
             easing: 'circleProgressEasing'
         },
 
+        animateEmpty: false,
+
         /**
          * Default animation starts at 0.0 and ends at specified `value`. Let's call this direct animation.
          * If you want to make reversed animation then you should set `animationStartValue` to 1.0.
@@ -250,7 +252,7 @@ License: MIT
         },
 
         draw: function() {
-            if (this.animation)
+            if (this.animation || this.animateEmpty)
                 this.drawAnimated(this.value, this.emptyFillValue);
             else
                 this.drawFrame(this.value, this.emptyFillValue);
@@ -356,7 +358,7 @@ License: MIT
                 .animate({ animationProgress: 1 }, $.extend({}, this.animation, {
                     step: function (animationProgress) {
                         var stepValue = self.animationStartValue * (1 - animationProgress) + v * animationProgress;
-                        var emptyStepValue = self.emptyAnimationStartValue * (1 - animationProgress) + e * animationProgress;
+                        var emptyStepValue = self.animateEmpty ? self.emptyAnimationStartValue * (1 - animationProgress) + e * animationProgress : self.emptyFillValue;
                         self.drawFrame(stepValue, emptyStepValue);
                         el.trigger('circle-animation-progress', [animationProgress, stepValue]);
                     }
