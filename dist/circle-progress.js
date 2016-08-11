@@ -1,17 +1,17 @@
 /*
-jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
+circle-progress - animated circular progress bars
 
-URL: http://kottenator.github.io/jquery-circle-progress/
+URL: http://kottenator.github.io/circle-progress/
 Author: Rostyslav Bryzgunov <kottenator@gmail.com>
-Version: 1.1.3
+Version: 1.0.0
 License: MIT
 */
-(function($) {
-    function CircleProgress(config) {
+(function setup(exports) {
+    exports.CircleProgress = function (config) {
         this.init(config);
-    }
+    };
 
-    CircleProgress.prototype = {
+    exports.CircleProgress.prototype = {
         //----------------------------------------------- public options -----------------------------------------------
         /**
          * This is the only required option. It should be from 0.0 to 1.0
@@ -98,7 +98,7 @@ License: MIT
         /**
          * Container element. Should be passed into constructor config
          * @protected
-         * @type {jQuery}
+         * @type {HTMLElement}
          */
         el: null,
 
@@ -357,83 +357,4 @@ License: MIT
             this.draw();
         }
     };
-
-    //-------------------------------------------- Initiating jQuery plugin --------------------------------------------
-    $.circleProgress = {
-        // Default options (you may override them)
-        defaults: CircleProgress.prototype
-    };
-
-    // ease-in-out-cubic
-    $.easing.circleProgressEasing = function(x, t, b, c, d) {
-        if ((t /= d / 2) < 1)
-            return c / 2 * t * t * t + b;
-        return c / 2 * ((t -= 2) * t * t + 2) + b;
-    };
-
-    /**
-     * Draw animated circular progress bar.
-     *
-     * Appends <canvas> to the element or updates already appended one.
-     *
-     * If animated, throws 3 events:
-     *
-     *   - circle-animation-start(jqEvent)
-     *   - circle-animation-progress(jqEvent, animationProgress, stepValue) - multiple event;
-     *                                                                        animationProgress: from 0.0 to 1.0;
-     *                                                                        stepValue: from 0.0 to value
-     *   - circle-animation-end(jqEvent)
-     *
-     * @param configOrCommand - Config object or command name
-     *     Example: { value: 0.75, size: 50, animation: false };
-     *     you may set any public property (see above);
-     *     `animation` may be set to false;
-     *     you may use .circleProgress('widget') to get the canvas
-     *     you may use .circleProgress('value', newValue) to dynamically update the value
-     *
-     * @param commandArgument - Some commands (like 'value') may require an argument
-     */
-    $.fn.circleProgress = function(configOrCommand, commandArgument) {
-        var dataName = 'circle-progress',
-            firstInstance = this.data(dataName);
-
-        if (configOrCommand == 'widget') {
-            if (!firstInstance)
-                throw Error('Calling "widget" method on not initialized instance is forbidden');
-            return firstInstance.canvas;
-        }
-
-        if (configOrCommand == 'value') {
-            if (!firstInstance)
-                throw Error('Calling "value" method on not initialized instance is forbidden');
-            if (typeof commandArgument == 'undefined') {
-                return firstInstance.getValue();
-            } else {
-                var newValue = arguments[1];
-                return this.each(function() {
-                    $(this).data(dataName).setValue(newValue);
-                });
-            }
-        }
-
-        return this.each(function() {
-            var el = $(this),
-                instance = el.data(dataName),
-                config = $.isPlainObject(configOrCommand) ? configOrCommand : {};
-
-            if (instance) {
-                instance.init(config);
-            } else {
-                var initialConfig = $.extend({}, el.data());
-                if (typeof initialConfig.fill == 'string')
-                    initialConfig.fill = JSON.parse(initialConfig.fill);
-                if (typeof initialConfig.animation == 'string')
-                    initialConfig.animation = JSON.parse(initialConfig.animation);
-                config = $.extend(initialConfig, config);
-                config.el = el;
-                instance = new CircleProgress(config);
-                el.data(dataName, instance);
-            }
-        });
-    };
-})(jQuery);
+})(window);

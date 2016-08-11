@@ -1,28 +1,32 @@
-jquery-circle-progress
-======================
-[![Build Status](https://travis-ci.org/kottenator/jquery-circle-progress.svg?branch=master)](https://travis-ci.org/kottenator/jquery-circle-progress)
+circle-progress
+===============
 
-jQuery Plugin to draw animated circular progress bars like this:
+Animated circular progress bars like this:
 
-![](http://i.imgur.com/zV5VUQG.png)
+![image](http://i.imgur.com/zV5VUQG.png)
 
-Check out [more examples](http://kottenator.github.io/jquery-circle-progress/)! Or maybe the crazy [one](http://jsbin.com/vatuza/1/)?
+Formerly known as `jquery-circle-progress`, now it doesn't depend on jQuery.
+But if you *do want jQuery* - [jquery-circle-progress](https://github.com/kottenator/jquery-circle-progress)
+still exists as jQuery *adapter* for this library.
+
+Check out [more examples](http://kottenator.github.io/circle-progress/)!
+Or maybe the crazy [one](http://jsbin.com/vatuza/1/)? *TODO*
 
 Install
 -------
-Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases)
-or `bower install jquery-circle-progress`
+Download [latest GitHub release](https://github.com/kottenator/circle-progress/releases)
+or `bower install circle-progress`.
 
 Usage
 -----
 ```html
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="jquery-circle-progress/dist/circle-progress.js"></script>
+<script src="circle-progress/dist/circle-progress.js"></script>
 
 <div id="circle"></div>
 
 <script>
-    $('#circle').circleProgress({
+    new CircleProgress({
+        el: document.getElementById("circle"),
         value: 0.75,
         size: 80,
         fill: {
@@ -38,22 +42,23 @@ You should specify options like in usage example above.
 
 | Option  | Description |
 | ---- | ---- | ---- |
-| **value** | This is the only required option. It should be from `0.0` to `1.0` <br> Default: `0` |
-| size | Size of the circle / canvas in pixels <br> Default: `100` |
-| startAngle | Initial angle (for `0` value) <br> Default: `-Math.PI` |
+| **value** | This is the only required option. It should be from `0.0` to `1.0`. <br> Default: `0` |
+| size | Size of the circle / canvas in pixels. <br> Default: `100` |
+| startAngle | Initial angle (for `0` value). <br> Default: `-Math.PI` |
 | reverse | Reverse animation and arc draw<br> Default: `false` |
-| thickness | Width of the arc. By default it's automatically calculated as 1/14 of `size` but you may set your own number <br> Default: `"auto"` |
-| lineCap | Arc line cap: `"butt"`, `"round"` or `"square"` - [read more](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.lineCap) <br> Default: `"butt"`
-| fill | The arc fill config. You may specify next:  <br>- `{ color: "#ff1e41" }` <br>- `{ color: 'rgba(255, 255, 255, .3)' }` <br>- `{ gradient: ["red", "green", "blue"] }` <br>- `{ gradient: [["red", .2], ["green", .3], ["blue", .8]] }` <br>- `{ gradient: [ ... ], gradientAngle: Math.PI / 4 }` <br>- `{ gradient: [ ... ], gradientDirection: [x0, y0, x1, y1] }` <br>- `{ image: "http://i.imgur.com/pT0i89v.png" }`<br>- `{ image: imageInstance }`<br>- `{ color: "lime", image: "http://i.imgur.com/pT0i89v.png" }` <br> Default: `{ gradient: ["#3aeabb", "#fdd250"] }` |
-| emptyFill | Color of the "empty" arc. Only a color fill supported by now <br> Default: `"rgba(0, 0, 0, .1)"` |
-| animation | Animation config. See [jQuery animations](http://api.jquery.com/animate/). <br> You may also set it to `false` <br> Default: `{ duration: 1200, easing: "circleProgressEase" }`  <br> `"circleProgressEase"` *is just a ease-in-out-cubic easing* |
-| animationStartValue | Default animation starts at `0.0` and ends at specified `value`. Let's call this direct animation. If you want to make reversed animation then you should set `animationStartValue` to `1.0`. Also you may specify any other value from `0.0` to `1.0` <br> Default: `0.0`
+| thickness | Width of the arc. By default it's automatically calculated as `1/14` of `size` but you may set your own number. <br> Default: `"auto"` |
+| lineCap | Arc line cap: `"butt"`, `"round"` or `"square"` - [read more](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.lineCap). <br> Default: `"butt"`
+| fill | The arc fill config. You may specify next: <br>- `"#ff1e41"` (CSS color spec) <br>- `{ color: "#ff1e41" }` (same as above) <br>- `{ gradient: ["red", "green", "blue"] }` <br>- `{ gradient: [["red", .2], ["green", .3], ["blue", .8]] }` <br>- `{ gradient: [ ... ], gradientAngle: Math.PI / 4 }` <br>- `{ gradient: [ ... ], gradientDirection: [x0, y0, x1, y1] }` <br>- `{ image: "http://i.imgur.com/pT0i89v.png" }`<br>- `{ image: imageInstance }`<br>- `{ color: "lime", image: "http://i.imgur.com/pT0i89v.png" }` <br> Default: `{ gradient: ["#3aeabb", "#fdd250"] }` |
+| emptyFill | Color of the "empty" arc. The same fill options as above. <br> Default: `"rgba(0, 0, 0, .1)"` |
+| animation | Animation config *TODO*. <br> You may also set it to `false`. <br> Default: ... |
+| animationStartValue | Default animation starts at `0.0` and ends at specified `value`. Let's call this direct animation. If you want to make reversed animation then you should set `animationStartValue` to `1.0`. Also you may specify any other value from `0.0` to `1.0`. <br> Default: `0.0`
 
-From version `1.1.3` you can specify any config option as HTML `data-` attribute. 
+You can specify any config option as HTML `data-` attribute.
 
-It will work *only on init*, i.e. after the widget is inited you may update its properties only via `.circleProgress({/*...*/})` method. `data-` attributes will be ignored. 
+It will work *only on init*, i.e. after the widget is initiated you can modify the instance properties
+but changing `data-` attributes will give no effect.
 
-Also, object options like `"fill"` or `"animation"` should be valid JSON (and don't forget about HTML-escaping):
+Also, *complex options* like `"fill"` should be in valid JSON format (and don't forget about HTML escaping):
 
 ```html
 <div
@@ -76,9 +81,9 @@ When animation is enabled, there are 3 events available:
 
 | Event | Handler |
 | ---- | ---- |
-| `circle-animation-start` | `function(event)`: <br>- `event` - jQuery event |
-| `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - from `0.0` to `1.0` <br>- `stepValue` - current step value: from `0.0` to `value` |
-| `circle-animation-end` | `function(event)`: <br>- `event` - jQuery event |
+| `circle-animation-start` | `function(event)`: <br>- `event` - event object *(TODO)* |
+| `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - event object *(TODO)* <br>- `animationProgress` - from `0.0` to `1.0` <br>- `stepValue` - current step value: from `0.0` to `value` |
+| `circle-animation-end` | `function(event)`: <br>- `event` - event object *(TODO)* |
 
 Browsers support
 ----------------
@@ -87,6 +92,10 @@ and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
 
 I have not implemented any fallback / polyfill for unsupported browsers yet
 *(i.e. for Internet Explorer 8 and older / misc browsers)*.
+
+----
+
+# Further documentation is not processed yet! *TODO*
 
 API
 ---
@@ -154,7 +163,7 @@ E.g. for Retina support or for responsive design, you can do it [in the followin
 
 #### What if I need it to run in IE8?
 
-There is no full-feature support for IE8 (actually, I didn't imlpement IE8 support at all). But you may follow [my recommendations](https://github.com/kottenator/jquery-circle-progress/issues/35).
+There is no full-feature support for IE8 (actually, I didn't implement IE8 support at all). But you may follow [my recommendations](https://github.com/kottenator/jquery-circle-progress/issues/35).
 
 #### How to stop the animation?
 
