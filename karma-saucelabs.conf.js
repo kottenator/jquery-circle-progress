@@ -39,13 +39,14 @@ module.exports = function(config) {
         frameworks: ['qunit'],
         files: [
             { pattern: 'tests/images/circle.png', served: true, watched: false, included: false },
+            'bower_components/jquery/dist/jquery.min.js',
             'bower_components/modernizr/modernizr.js',
             'dist/circle-progress.js',
             'tests/test_utils.js',
             'tests/tests.js'
         ],
         sauceLabs: {
-            testName: 'Unit Tests for circle-progress'
+            testName: 'Unit Tests for jquery-circle-progress'
         },
         captureTimeout: 120000,
         customLaunchers: customLaunchers,
