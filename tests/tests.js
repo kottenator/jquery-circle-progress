@@ -189,7 +189,7 @@
                 size: 50
             });
 
-            assert.equal(50 + 'px', $(canvas).css('width'));
+            assert.equal('50', $(canvas).width());
             assert.equal(100, canvas.width);
         });
 
@@ -204,7 +204,7 @@
                 size: 50
             });
 
-            assert.equal(50 + 'px', $(canvas).css('height'));
+            assert.equal('50', $(canvas).height());
             assert.equal(50, canvas.width);
         });
     } else {
