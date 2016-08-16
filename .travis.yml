@@ -1,11 +1,13 @@
 language: node_js
 node_js:
   - 0.10
-before_script:
-  - npm install -g bower karma-cli
-  - bower install
+before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+install:
+  - npm install -g bower
+  - npm install
+  - bower install
 env:
   global:
     - secure: Z6oEIaybr8vkGTZZbDJJT+9wO4SjRdXq5AV1dlgrQZ0j2wSXmP6Q4HeL8jWWt6RFOZvMyNLq+X6KwWSAsIB7B8TRF1mBrX++MBKINj+oUUYAAhPU9yl8iwgvQLh3suER1OvB0BP/LdeFCZ8zSG2UPI1KRqk4ZdFKwEg0u4CSQvo=
