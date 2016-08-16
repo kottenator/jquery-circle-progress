@@ -1,4 +1,7 @@
 (function() {
+    // TODO: temporarily set easing because of the non defined easing in $.animate
+    CircleProgress.prototype.animation.easing = 'linear';
+
     if (Modernizr.canvas) {
         QUnit.module("Layout tests, no animation");
 
@@ -8,8 +11,8 @@
                 defaultSize = 100,
                 defaultThickness = parseInt(defaultSize / 14); // 7
 
-            assert.equal($.circleProgress.defaults.size, defaultSize, "Default circle size: 100 pixels");
-            assert.equal($.circleProgress.defaults.thickness, 'auto', "Default circle thickness: 'auto' (i.e. 1/14 of size)");
+            assert.equal(CircleProgress.prototype.size, defaultSize, "Default circle size: 100 pixels");
+            assert.equal(CircleProgress.prototype.thickness, 'auto', "Default circle thickness: 'auto' (i.e. 1/14 of size)");
             assert.equal(canvas.tagName.toLowerCase(), 'canvas', "Method .circleProgress('widget') returns HTMLCanvasElement");
             assert.equal($canvas.width(), defaultSize, "Default width: 100 pixels");
             assert.equal($canvas.height(), defaultSize, "Default height: 100 pixels");
@@ -23,7 +26,7 @@
                     value: 0.5,
                     animation: false
                 }),
-                size = $.circleProgress.defaults.size;
+                size = CircleProgress.prototype.size;
 
             assert.pixelCloseHex(canvas, 1, size / 2 - 1, '#3aeabb', 0.015);
             assert.pixelCloseRGBA(canvas, 1, size / 2 + 1, 'rgba(0, 0, 0, 0.1)', 0.01);
@@ -42,7 +45,7 @@
                     fill: { color: color },
                     animation: false
                 }),
-                defaultSize = $.circleProgress.defaults.size;
+                defaultSize = CircleProgress.prototype.size;
 
             assert.pixelHex(canvas, 1, defaultSize / 2 - 1, color);
             assert.pixelHex(canvas, defaultSize - 1, defaultSize / 2 - 1, color);
@@ -56,7 +59,7 @@
                     value: 0.5,
                     fill: { color: color }
                 }),
-                size = $.circleProgress.defaults.size;
+                size = CircleProgress.prototype.size;
 
             assert.expect(8);
             QUnit.stop();
@@ -148,7 +151,7 @@
             assert.expect(9);
             image.src = imageUrl;
 
-            $(image).load(function() {
+            $(image).ready(function() {
                 var canvas = createCircle({
                     value: 0.5,
                     thickness: 20,
@@ -188,7 +191,12 @@
         var output = $('#qunit-fixture');
         if (!output[0])
             output = $('body');
-        var el = $('<span>').appendTo(output).circleProgress(cfg);
-        return el.circleProgress('widget');
+        var el = $('<span>').appendTo(output);
+
+        var instance = new CircleProgress($.extend({
+            el: el
+        }, cfg));
+
+        return instance.canvas;
     }
 })();
