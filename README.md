@@ -49,9 +49,9 @@ You should specify options like in usage example above.
 | animation | Animation config. See [jQuery animations](http://api.jquery.com/animate/). <br> You may also set it to `false` <br> Default: `{ duration: 1200, easing: "circleProgressEase" }`  <br> `"circleProgressEase"` *is just a ease-in-out-cubic easing* |
 | animationStartValue | Default animation starts at `0.0` and ends at specified `value`. Let's call this direct animation. If you want to make reversed animation then you should set `animationStartValue` to `1.0`. Also you may specify any other value from `0.0` to `1.0` <br> Default: `0.0`
 
-From version `1.1.3` you can specify any config option as HTML `data-` attribute. 
+From version `1.1.3` you can specify any config option as HTML `data-` attribute.
 
-It will work *only on init*, i.e. after the widget is inited you may update its properties only via `.circleProgress({/*...*/})` method. `data-` attributes will be ignored. 
+It will work *only on init*, i.e. after the widget is inited you may update its properties only via `.circleProgress({/*...*/})` method. `data-` attributes will be ignored.
 
 Also, object options like `"fill"` or `"animation"` should be valid JSON (and don't forget about HTML-escaping):
 
@@ -80,6 +80,13 @@ When animation is enabled, there are 3 events available:
 | `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - from `0.0` to `1.0` <br>- `stepValue` - current step value: from `0.0` to `value` |
 | `circle-animation-end` | `function(event)`: <br>- `event` - jQuery event |
 
+When the circular progress bar is inited or re-inited, there is the following
+event:
+
+| Event | Handler |
+| ---- | ---- |
+| `circle-inited` | `function(event)`: <br>- `event` - jQuery event |
+
 Browsers support
 ----------------
 It uses `<canvas>` which is supported by all modern browsers *(including mobile browsers)*
@@ -104,10 +111,10 @@ It will return the *first* item's value (by *first* I mean when `$('.circle').le
 
 Set it:
 ```js
-$('.circle').circleProgress('value', 0.75); // set value to 0.75 & animate the change 
+$('.circle').circleProgress('value', 0.75); // set value to 0.75 & animate the change
 ```
 
-It will update *all* selected items value and animate the change. 
+It will update *all* selected items value and animate the change.
 It doesn't *redraw* the widget - it updates the value & animates the changes.
 For example, it may be an AJAX loading indicator, which shows the loading progress.
 
