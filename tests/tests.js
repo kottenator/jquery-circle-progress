@@ -1,4 +1,4 @@
-(function() {
+(function($) {
     if (Modernizr.canvas) {
         QUnit.module("Layout tests, no animation");
 
@@ -221,4 +221,4 @@
         var el = $('<span>').appendTo(output).circleProgress(cfg);
         return el.circleProgress('widget');
     }
-})();
+})(jQuery);
