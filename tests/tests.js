@@ -177,6 +177,36 @@
                 }, 1400);
             });
         });
+
+        QUnit.test("Test it renders correctly on retina", function(assert) {
+            /**
+            * Mock devicePixelRatio
+            */
+            window.devicePixelRatio = 2;
+
+            var canvas = createCircle({
+                value: 0.75,
+                size: 50
+            });
+
+            assert.equal(50 + 'px', $(canvas).css('width'));
+            assert.equal(100, canvas.width);
+        });
+
+        QUnit.test("Test it renders correctly on regular pixel density", function(assert) {
+            /**
+            * Mock devicePixelRatio
+            */
+            window.devicePixelRatio = 1;
+
+            var canvas = createCircle({
+                value: 0.75,
+                size: 50
+            });
+
+            assert.equal(50 + 'px', $(canvas).css('height'));
+            assert.equal(50, canvas.width);
+        });
     } else {
         QUnit.test("Your browser doesn't support Canvas", function(assert) {
             assert.ok(true, "That's fine");
