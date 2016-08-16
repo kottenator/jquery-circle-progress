@@ -160,7 +160,7 @@ License: MIT
 
             if (window.devicePixelRatio > 1) {
                 var scaleBy = window.devicePixelRatio;
-                canvas.style.width = canvas.style.height = [this.size, 'px'].join('');
+                canvas.style.width = canvas.style.height = this.size + 'px';
                 canvas.width = canvas.height = this.size * scaleBy;
                 this.ctx.scale(scaleBy, scaleBy);
             }
