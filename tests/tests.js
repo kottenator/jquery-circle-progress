@@ -1,4 +1,4 @@
-(function() {
+(function($) {
     // TODO: temporarily set easing because of the non defined easing in $.animate
     CircleProgress.prototype.animation.easing = 'linear';
 
@@ -189,6 +189,7 @@
     // Utilities
     function createCircle(cfg) {
         var output = $('#qunit-fixture');
+
         if (!output[0])
             output = $('body');
         var el = $('<span>').appendTo(output);
@@ -199,4 +200,4 @@
 
         return instance.canvas;
     }
-})();
+})(jQuery);
