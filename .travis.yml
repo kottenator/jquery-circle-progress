@@ -1,9 +1,13 @@
 language: node_js
 node_js:
-  - 0.10
+  - 5.0.0
 before_script:
   - npm install -g bower karma-cli
   - bower install
+  - cd bower_components/modernizr
+  - npm install
+  - ./bin/modernizr -c lib/config-all.json
+  - cd ../..
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 env:
