@@ -1,24 +1,25 @@
 (function() {
     QUnit.extend(QUnit.assert, {
         pixelRGBA: function(canvas, x, y, expectedRGBA, message) {
-            return _pixelColor(canvas, x, y, expectedRGBA, null, message, _parseRGBA, _dumpRGBA);
+            return _pixelColor.call(this, canvas, x, y, expectedRGBA, null, message, _parseRGBA, _dumpRGBA);
         },
 
         pixelHex: function(canvas, x, y, expectedHex, message) {
-            return _pixelColor(canvas, x, y, expectedHex, null, message, _parseHex, _dumpHex, true);
+            return _pixelColor.call(this, canvas, x, y, expectedHex, null, message, _parseHex, _dumpHex, true);
         },
 
         pixelCloseRGBA: function(canvas, x, y, expectedRGBA, maxDiff, message) {
-            return _pixelColor(canvas, x, y, expectedRGBA, maxDiff, message, _parseRGBA, _dumpRGBA);
+            return _pixelColor.call(this, canvas, x, y, expectedRGBA, maxDiff, message, _parseRGBA, _dumpRGBA);
         },
 
         pixelCloseHex: function(canvas, x, y, expectedHex, maxDiff, message) {
-            return _pixelColor(canvas, x, y, expectedHex, maxDiff, message, _parseHex, _dumpHex, true);
+            return _pixelColor.call(this, canvas, x, y, expectedHex, maxDiff, message, _parseHex, _dumpHex, true);
         }
     });
 
     function _pixelColor(canvas, x, y, expectedColor, maxDiff, message, parseColorFn, dumpColorFn, ignoreAlpha) {
-        var data = canvas.getContext('2d').getImageData(x, y, 1, 1).data,
+        var scaleBy = window.devicePixelRatio,
+            data = canvas.getContext('2d').getImageData(x * scaleBy, y * scaleBy, 1, 1).data,
             expectedData = parseColorFn(expectedColor),
             actualColor = dumpColorFn(data);
 
@@ -42,7 +43,7 @@
             }
         }
 
-        QUnit.push(result, actualColor, expectedColor, message);
+        this.push(result, actualColor, expectedColor, message);
     }
 
     function _parseRGBA(s) {

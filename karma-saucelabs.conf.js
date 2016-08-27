@@ -39,9 +39,9 @@ module.exports = function(config) {
         frameworks: ['qunit'],
         files: [
             { pattern: 'tests/images/circle.png', served: true, watched: false, included: false },
-            'bower_components/jquery/dist/jquery.min.js',
-            'bower_components/modernizr/modernizr.js',
+            'node_modules/jquery/dist/jquery.min.js',
             'dist/circle-progress.js',
+            'tests/modernizr.js',
             'tests/test_utils.js',
             'tests/tests.js'
         ],

@@ -1,17 +1,9 @@
 language: node_js
 node_js:
-  - 5.0.0
+  - 6
 before_script:
-  - npm install -g bower karma-cli
-  - bower install
-  - cd bower_components/modernizr
-  - npm install
-  - ./bin/modernizr -c lib/config-all.json
-  - cd ../..
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-addons:
-  firefox: latest
 env:
   global:
     - secure: Z6oEIaybr8vkGTZZbDJJT+9wO4SjRdXq5AV1dlgrQZ0j2wSXmP6Q4HeL8jWWt6RFOZvMyNLq+X6KwWSAsIB7B8TRF1mBrX++MBKINj+oUUYAAhPU9yl8iwgvQLh3suER1OvB0BP/LdeFCZ8zSG2UPI1KRqk4ZdFKwEg0u4CSQvo=
