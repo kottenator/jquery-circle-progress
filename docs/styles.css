@@ -1,0 +1,112 @@
+/* These are just a test styles - you don't need them in your project */
+body {
+    background-color: #444;
+    padding-top: 40px;
+    font: 15px/1.3 Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+}
+
+a {
+    color: orange;
+}
+
+.new-tab-link {
+    padding-right: 14px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3ggXDSIzCeRHfQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAA9SURBVBjTY2RAA/+XMvxHF2NkwAOwacCq4P9Shv8suFQzRiNsYUEXwKoJ2VhkNrIaJgYiAAs2N2BVRMirAD6JHi10MCdVAAAAAElFTkSuQmCC) no-repeat right center;
+}
+
+.page-title {
+    font: 400 40px/1.5 Open Sans, sans-serif;
+    text-align: center;
+}
+
+.circle {
+    width: 100px;
+    margin: 6px 6px 20px;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.circle canvas {
+    vertical-align: top;
+}
+
+.circle strong {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 30px;
+}
+
+.circle strong i {
+    font-style: normal;
+    font-size: 0.6em;
+    font-weight: normal;
+}
+
+.circle span {
+    display: block;
+    color: #aaa;
+    margin-top: 12px;
+}
+
+p {
+    margin: 40px 0;
+}
+
+.install {
+    margin: 50px 0;
+}
+
+.install code {
+    padding: 6px 12px;
+    display: inline-block;
+    font: 13px/20px Courier New, Liberation Mono, monospase;
+    background-color: #333333;
+    border-radius: 4px;
+    margin: 5px 0;
+    white-space: nowrap;
+}
+
+.install a {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 6px 12px;
+    line-height: 20px;
+    background-color: #111;
+    color: #fff;
+    border-radius: 3px;
+    text-decoration: none;
+    margin: 5px 0;
+    transition: all .3s;
+}
+
+.install a:hover {
+    background-color: #222;
+}
+
+.credits {
+    color: #aaa;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.credits img {
+    margin-left: 4px;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+@media (max-height: 600px), (max-width: 480px) {
+    .credits {
+        position: inherit;
+    }
+}

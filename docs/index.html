@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery-circle-progress - jQuery Plugin to draw animated circular progress bars</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+</head>
+
+<body>
+
+<h1 class="page-title">
+    jquery-circle-progress
+</h1>
+
+<div class="circles">
+    <div class="first circle">
+        <span>no <br/> animation</span>
+    </div>
+
+    <div class="second circle">
+        <strong></strong>
+        <span>animation <br/> progress</span>
+    </div>
+
+    <div class="third circle">
+        <strong></strong>
+        <span>value <br/> progress</span>
+    </div>
+
+    <div class="forth circle">
+        <span>custom angle, <br/> value update</span>
+    </div>
+
+    <div
+        class="fifth circle"
+        data-value="0.9"
+        data-size="60"
+        data-thickness="20"
+        data-animation-start-value="1.0"
+        data-fill="{
+            &quot;color&quot;: &quot;rgba(0, 0, 0, .3)&quot;,
+            &quot;image&quot;: &quot;http://i.imgur.com/pT0i89v.png&quot;
+        }"
+        data-reverse="true"
+    >
+        <span>image fill, <br/> custom sizes</span>
+    </div>
+</div>
+
+<p>
+    See these examples <a href="examples.js" class="new-tab-link" target="_blank">code</a> and
+    read the documentation on <a href="https://github.com/kottenator/jquery-circle-progress">GitHub</a>
+</p>
+
+<p class="install">
+    <a href="https://github.com/kottenator/jquery-circle-progress/archive/1.1.3.tar.gz">Download v.1.1.3</a>
+    or <code>bower install jquery-circle-progress</code>
+</p>
+
+<p class="credits">
+    © 2015 - made by Rostyslav Bryzgunov
+
+    <a href="https://github.com/kottenator">
+        <img src="http://www.gravatar.com/avatar/8951250b5946e3c7923710e125fb3760?s=30" width="30" height="30" alt="avatar"/>
+    </a>
+</p>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="dist/circle-progress.js"></script>
+<script src="examples.js"></script>
+
+</body>
+
+</html>
