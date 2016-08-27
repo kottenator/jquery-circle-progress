@@ -1,6 +1,8 @@
 jquery-circle-progress
 ======================
+
 [![Build Status](https://travis-ci.org/kottenator/jquery-circle-progress.svg?branch=master)](https://travis-ci.org/kottenator/jquery-circle-progress)
+[![Bower version](https://badge.fury.io/bo/jquery-circle-progress.svg)](https://badge.fury.io/bo/jquery-circle-progress)
 
 jQuery Plugin to draw animated circular progress bars like this:
 
