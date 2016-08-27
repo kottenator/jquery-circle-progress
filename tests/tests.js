@@ -164,7 +164,7 @@
         var done = assert.async();
         image.src = imageUrl;
 
-        $(image).ready(function() {
+        $(image).on('load', function() {
             var canvas = createCircle({
                 value: 0.5,
                 thickness: 20,
