@@ -181,6 +181,9 @@ License: MIT
             if (!fill)
                 throw Error("The fill is not specified!");
 
+            if (typeof fill == 'string')
+                fill = { color: fill };
+
             if (fill.color)
                 this.arcFill = fill.color;
 
