@@ -89,6 +89,12 @@ License: MIT
          */
         lineCap: 'butt',
 
+        /**
+         * Canvas insertion mode: append or prepend it into the parent element?
+         * @type {string}
+         */
+        insertMode: 'prepend',
+
         //-------------------------------------- protected properties and methods --------------------------------------
         /**
          * @protected
@@ -154,7 +160,10 @@ License: MIT
          * @protected
          */
         initWidget: function() {
-            var canvas = this.canvas = this.canvas || $('<canvas>').prependTo(this.el)[0];
+            if (!this.canvas)
+                this.canvas = $('<canvas>')[this.insertMode == 'prepend' ? 'prependTo' : 'appendTo'](this.el)[0];
+
+            var canvas = this.canvas;
             canvas.width = this.size;
             canvas.height = this.size;
             this.ctx = canvas.getContext('2d');
