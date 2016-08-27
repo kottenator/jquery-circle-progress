@@ -268,6 +268,9 @@ License: MIT
          * @param {number} v - Frame value
          */
         drawArc: function(v) {
+            if (v === 0)
+                return;
+
             var ctx = this.ctx,
                 r = this.radius,
                 t = this.getThickness(),
