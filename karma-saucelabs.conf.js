@@ -1,37 +1,41 @@
 // Karma configuration
 module.exports = function(config) {
     var customLaunchers = {
-        'latest-chrome': {
+        'Latest Chrome on Windows 10': {
             base: 'SauceLabs',
-            browserName: 'chrome'
+            platform: 'Windows 10',
+            browserName: 'chrome',
+            version: 'latest'
         },
-        'latest-firefox': {
+        'Latest Firefox on Windows 10': {
             base: 'SauceLabs',
-            browserName: 'firefox'
+            platform: 'Windows 10',
+            browserName: 'firefox',
+            version: 'latest'
         },
-        'internet-explorer-9': {
+        'IE9 on Windows 7': {
             base: 'SauceLabs',
+            platform: 'Windows 7',
             browserName: 'internet explorer',
             version: '9'
         },
-        'safari-5': {
+        'Latest Safari on OS X 10.11': {
             base: 'SauceLabs',
-            platform: "OS X 10.6",
+            platform: 'OS X 10.11',
             browserName: 'safari',
-            version: '5'
+            version: 'latest'
         },
-        'ios-6': {
+        'iPhone emulator on OS X 10.11': {
             base: 'SauceLabs',
-            platform: "OS X 10.8",
+            platform: "OS X 10.11",
             browserName: 'iphone',
-            version: "6.0"
+            version: "8.1"
         },
-        'android-4': {
+        'Android emulator on Linux': {
             base: 'SauceLabs',
-            platform: "Linux",
-            device: 'Motorola Droid Razr Emulator',
+            platform: 'Linux',
             browserName: 'android',
-            version: "4.0"
+            version: '5.0'
         }
     };
 
