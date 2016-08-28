@@ -25,13 +25,13 @@ module.exports = function(config) {
             browserName: 'safari',
             version: 'latest'
         },
-        'iPhone emulator on OS X 10.11': {
+        'iPhone emulator': {
             base: 'SauceLabs',
             platform: "OS X 10.11",
             browserName: 'iphone',
             version: "8.1"
         },
-        'Android emulator on Linux': {
+        'Android emulator': {
             base: 'SauceLabs',
             platform: 'Linux',
             browserName: 'android',
@@ -50,7 +50,7 @@ module.exports = function(config) {
             'tests/tests.js'
         ],
         sauceLabs: {
-            testName: 'Unit Tests for jquery-circle-progress'
+            testName: 'Unit tests for jquery-circle-progress'
         },
         captureTimeout: 120000,
         customLaunchers: customLaunchers,
