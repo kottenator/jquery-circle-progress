@@ -194,7 +194,10 @@ You need to update `dist/circle-progress.min.js` after any change to `dist/circl
  
 ```sh
 npm run build-min
-``` 
+```
+
+If you're using one of JetBrains IDEs - you can configure a File Watcher.
+It's also possible to use some CLI tool like [Watchman](https://facebook.github.io/watchman/).
 
 ### Test
 
