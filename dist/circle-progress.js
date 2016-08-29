@@ -1,12 +1,21 @@
-/*
-jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
-
-URL: http://kottenator.github.io/jquery-circle-progress/
-Author: Rostyslav Bryzgunov <kottenator@gmail.com>
-Version: 1.1.3
-License: MIT
-*/
+/**
+ * jquery-circle-progress - jQuery Plugin to draw animated circular progress bars:
+ * {@link http://kottenator.github.io/jquery-circle-progress/}
+ *
+ * @author Rostyslav Bryzgunov <kottenator@gmail.com>
+ * @version 1.2.0-alpha
+ * @licence MIT
+ * @preserve
+ */
 (function($) {
+    /**
+     * Inner implementation of the circle progress bar.
+     * The class is not exposed _yet_ but you can create an instance through jQuery method call.
+     *
+     * @param {object} config - You can customize any class member (property or method).
+     * @class
+     * @alias CircleProgress
+     */
     function CircleProgress(config) {
         this.init(config);
     }
@@ -14,54 +23,71 @@ License: MIT
     CircleProgress.prototype = {
         //----------------------------------------------- public options -----------------------------------------------
         /**
-         * This is the only required option. It should be from 0.0 to 1.0
+         * This is the only required option. It should be from `0.0` to `1.0`.
          * @type {number}
+         * @default 0.0
          */
         value: 0.0,
 
         /**
-         * Size of the circle / canvas in pixels
+         * Size of the canvas in pixels.
+         * It's a square so we need only one dimension.
          * @type {number}
+         * @default 100.0
          */
         size: 100.0,
 
         /**
-         * Initial angle for 0.0 value in radians
+         * Initial angle for `0.0` value in radians.
          * @type {number}
+         * @default -Math.PI
          */
         startAngle: -Math.PI,
 
         /**
-         * Width of the arc. By default it's auto-calculated as 1/14 of size, but you may set it explicitly in pixels
+         * Width of the arc in pixels.
+         * If it's `'auto'` - the value is auto-calculated as `[this.size]{@link CircleProgress#size} / 14`.
          * @type {number|string}
+         * @default 'auto'
          */
         thickness: 'auto',
 
         /**
          * Fill of the arc. You may set it to:
+         *
          *   - solid color:
-         *     - { color: '#3aeabb' }
-         *     - { color: 'rgba(255, 255, 255, .3)' }
-         *   - linear gradient (left to right):
-         *     - { gradient: ['#3aeabb', '#fdd250'], gradientAngle: Math.PI / 4 }
-         *     - { gradient: ['red', 'green', 'blue'], gradientDirection: [x0, y0, x1, y1] }
+         *     - `'#3aeabb'`
+         *     - `{ color: '#3aeabb' }`
+         *     - `{ color: 'rgba(255, 255, 255, .3)' }`
+         *   - linear gradient _(left to right)_:
+         *     - `{ gradient: ['#3aeabb', '#fdd250'], gradientAngle: Math.PI / 4 }`
+         *     - `{ gradient: ['red', 'green', 'blue'], gradientDirection: [x0, y0, x1, y1] }`
+         *     - `{ gradient: [["red", .2], ["green", .3], ["blue", .8]] }`
          *   - image:
-         *     - { image: 'http://i.imgur.com/pT0i89v.png' }
-         *     - { image: imageObject }
-         *     - { color: 'lime', image: 'http://i.imgur.com/pT0i89v.png' } - color displayed until the image is loaded
+         *     - `{ image: 'http://i.imgur.com/pT0i89v.png' }`
+         *     - `{ image: imageObject }`
+         *     - `{ color: 'lime', image: 'http://i.imgur.com/pT0i89v.png' }` -
+         *       color displayed until the image is loaded
+         *
+         * @default {gradient: ['#3aeabb', '#fdd250']}
          */
         fill: {
             gradient: ['#3aeabb', '#fdd250']
         },
 
         /**
-         * Color of the "empty" arc. Only a color fill supported by now
+         * Color of the "empty" arc. Only a color fill supported by now.
          * @type {string}
+         * @default 'rgba(0, 0, 0, .1)'
          */
         emptyFill: 'rgba(0, 0, 0, .1)',
 
         /**
-         * Animation config (see jQuery animations: http://api.jquery.com/animate/)
+         * jQuery Animation config.
+         * You can pass `false` to disable the animation.
+         * @see http://api.jquery.com/animate/
+         * @type {object|boolean}
+         * @default {duration: 1200, easing: 'circleProgressEasing'}
          */
         animation: {
             duration: 1200,
@@ -69,83 +95,95 @@ License: MIT
         },
 
         /**
-         * Default animation starts at 0.0 and ends at specified `value`. Let's call this direct animation.
-         * If you want to make reversed animation then you should set `animationStartValue` to 1.0.
-         * Also you may specify any other value from 0.0 to 1.0
+         * Default animation starts at `0.0` and ends at specified `value`. Let's call this _direct animation_.
+         * If you want to make _reversed animation_ - set `animationStartValue: 1.0`.
+         * Also you may specify any other value from `0.0` to `1.0`.
          * @type {number}
+         * @default 0.0
          */
         animationStartValue: 0.0,
 
         /**
-         * Reverse animation and arc draw
+         * Reverse animation and arc draw.
+         * By default, the arc is filled from `0.0` to `value`, _clockwise_.
+         * With `reverse: true` the arc is filled from `1.0` to `value`, _counter-clockwise_.
          * @type {boolean}
+         * @default false
          */
         reverse: false,
 
         /**
-         * Arc line cap ('butt', 'round' or 'square')
-         * Read more: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.lineCap
+         * Arc line cap: `'butt'`, `'round'` or `'square'` -
+         * [read more]{@link https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.lineCap}.
          * @type {string}
+         * @default 'butt'
          */
         lineCap: 'butt',
 
         /**
          * Canvas insertion mode: append or prepend it into the parent element?
          * @type {string}
+         * @default 'prepend'
          */
         insertMode: 'prepend',
 
         //-------------------------------------- protected properties and methods --------------------------------------
         /**
+         * Link to {@link CircleProgress} constructor.
          * @protected
          */
         constructor: CircleProgress,
 
         /**
-         * Container element. Should be passed into constructor config
+         * Container element. Should be passed into constructor config.
          * @protected
          * @type {jQuery}
          */
         el: null,
 
         /**
-         * Canvas element. Automatically generated and prepended to the {@link CircleProgress.el container}
+         * Canvas element. Automatically generated and prepended to [this.el]{@link CircleProgress#el}.
          * @protected
          * @type {HTMLCanvasElement}
          */
         canvas: null,
 
         /**
-         * 2D-context of the {@link CircleProgress.canvas canvas}
+         * 2D-context of [this.canvas]{@link CircleProgress#canvas}.
          * @protected
          * @type {CanvasRenderingContext2D}
          */
         ctx: null,
 
         /**
-         * Radius of the outer circle. Automatically calculated as {@link CircleProgress.size} / 2
+         * Radius of the outer circle. Automatically calculated as `[this.size]{@link CircleProgress#size} / 2`.
          * @protected
          * @type {number}
          */
         radius: 0.0,
 
         /**
-         * Fill of the main arc. Automatically calculated, depending on {@link CircleProgress.fill} option
+         * Fill of the main arc. Automatically calculated, depending on [this.fill]{@link CircleProgress#fill} option.
          * @protected
          * @type {string|CanvasGradient|CanvasPattern}
          */
         arcFill: null,
 
         /**
-         * Last rendered frame value
+         * Last rendered frame value.
          * @protected
          * @type {number}
          */
         lastFrameValue: 0.0,
 
         /**
-         * Init/re-init the widget
-         * @param {object} config - Config
+         * Init/re-init the widget.
+         *
+         * Throws a jQuery event:
+         *
+         * - `circle-inited(jqEvent)`
+         *
+         * @param {object} config - You can customize any class member (property or method).
          */
         init: function(config) {
             $.extend(this, config);
@@ -157,6 +195,7 @@ License: MIT
         },
 
         /**
+         * Initialize `<canvas>`.
          * @protected
          */
         initWidget: function() {
@@ -177,8 +216,8 @@ License: MIT
         },
 
         /**
-         * This method sets {@link CircleProgress.arcFill}
-         * It could do this async (on image load)
+         * This method sets [this.arcFill]{@link CircleProgress#arcFill}.
+         * It could do this async (on image load).
          * @protected
          */
         initFill: function() {
@@ -254,6 +293,10 @@ License: MIT
             }
         },
 
+        /**
+         * Draw the circle.
+         * @protected
+         */
         draw: function() {
             if (this.animation)
                 this.drawAnimated(this.value);
@@ -262,8 +305,9 @@ License: MIT
         },
 
         /**
+         * Draw a single animation frame.
          * @protected
-         * @param {number} v - Frame value
+         * @param {number} v - Frame value.
          */
         drawFrame: function(v) {
             this.lastFrameValue = v;
@@ -273,8 +317,9 @@ License: MIT
         },
 
         /**
+         * Draw the arc (part of the circle).
          * @protected
-         * @param {number} v - Frame value
+         * @param {number} v - Frame value.
          */
         drawArc: function(v) {
             if (v === 0)
@@ -302,8 +347,9 @@ License: MIT
         },
 
         /**
+         * Draw the _empty (background)_ arc (part of the circle).
          * @protected
-         * @param {number} v - Frame value
+         * @param {number} v - Frame value.
          */
         drawEmptyArc: function(v) {
             var ctx = this.ctx,
@@ -333,8 +379,17 @@ License: MIT
         },
 
         /**
+         * Animate the progress bar.
+         *
+         * Throws 3 jQuery events:
+         *
+         * - `circle-animation-start(jqEvent)`
+         * - `circle-animation-progress(jqEvent, animationProgress, stepValue)` - multiple event
+         *   animationProgress: from `0.0` to `1.0`; stepValue: from `0.0` to `value`
+         * - `circle-animation-end(jqEvent)`
+         *
          * @protected
-         * @param {number} v - Value
+         * @param {number} v - Final value.
          */
         drawAnimated: function(v) {
             var self = this,
@@ -362,6 +417,8 @@ License: MIT
         },
 
         /**
+         * Get the circle thickness.
+         * @see CircleProgress#thickness
          * @protected
          * @returns {number}
          */
@@ -369,10 +426,20 @@ License: MIT
             return $.isNumeric(this.thickness) ? this.thickness : this.size / 14;
         },
 
+        /**
+         * Get current value.
+         * @protected
+         * @return {number}
+         */
         getValue: function() {
             return this.value;
         },
 
+        /**
+         * Set current value (with smooth animation transition).
+         * @protected
+         * @param {number} newValue
+         */
         setValue: function(newValue) {
             if (this.animation)
                 this.animationStartValue = this.lastFrameValue;
@@ -395,26 +462,30 @@ License: MIT
     };
 
     /**
-     * Draw animated circular progress bar.
+     * Creates an instance of {@link CircleProgress}.
+     * Produces [init event]{@link CircleProgress#init} and [animation events]{@link CircleProgress#drawAnimated}.
      *
-     * Appends <canvas> to the element or updates already appended one.
+     * @param {object} [configOrCommand] - Config object or command name.
      *
-     * If animated, throws 3 events:
+     * Config example (you can specify any {@link CircleProgress} property):
      *
-     *   - circle-animation-start(jqEvent)
-     *   - circle-animation-progress(jqEvent, animationProgress, stepValue) - multiple event;
-     *                                                                        animationProgress: from 0.0 to 1.0;
-     *                                                                        stepValue: from 0.0 to value
-     *   - circle-animation-end(jqEvent)
+     * ```js
+     * { value: 0.75, size: 50, animation: false }
+     * ```
      *
-     * @param configOrCommand - Config object or command name
-     *     Example: { value: 0.75, size: 50, animation: false };
-     *     you may set any public property (see above);
-     *     `animation` may be set to false;
-     *     you may use .circleProgress('widget') to get the canvas
-     *     you may use .circleProgress('value', newValue) to dynamically update the value
+     * Commands:
      *
-     * @param commandArgument - Some commands (like 'value') may require an argument
+     * ```js
+     * el.circleProgress('widget'); // get the <canvas>
+     * el.circleProgress('value'); // get the value
+     * el.circleProgress('value', newValue); // update the value
+     * el.circleProgress('redraw'); // redraw the circle
+     * el.circleProgress(); // the same as 'redraw'
+     * ```
+     *
+     * @param {string} [commandArgument] - Some commands (like `'value'`) may require an argument.
+     * @see CircleProgress
+     * @alias "$(...).circleProgress"
      */
     $.fn.circleProgress = function(configOrCommand, commandArgument) {
         var dataName = 'circle-progress',

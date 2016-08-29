@@ -12,11 +12,13 @@ Check out [more examples](http://kottenator.github.io/jquery-circle-progress/)! 
 
 Install
 -------
+
 Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases)
 or `bower install jquery-circle-progress`
 
 Usage
 -----
+
 ```html
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="jquery-circle-progress/dist/circle-progress.js"></script>
@@ -36,6 +38,7 @@ Usage
 
 Options
 -------
+
 You should specify options like in usage example above.
 
 | Option  | Description |
@@ -75,6 +78,7 @@ Also, object options like `"fill"` or `"animation"` should be valid JSON (and do
 
 Events
 ------
+
 When animation is enabled, there are 3 events available:
 
 | Event | Handler |
@@ -83,8 +87,7 @@ When animation is enabled, there are 3 events available:
 | `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - from `0.0` to `1.0` <br>- `stepValue` - current step value: from `0.0` to `value` |
 | `circle-animation-end` | `function(event)`: <br>- `event` - jQuery event |
 
-When the circular progress bar is inited or re-inited, there is the following
-event:
+When the circular progress bar is inited or re-inited, there is the following event:
 
 | Event | Handler |
 | ---- | ---- |
@@ -92,6 +95,7 @@ event:
 
 Browsers support
 ----------------
+
 It uses `<canvas>` which is supported by all modern browsers *(including mobile browsers)*
 and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
 
@@ -104,6 +108,7 @@ API
 #### Get/set value
 
 Get it:
+
 ```js
 $('.circle').circleProgress({ value: 0.5 });
 var value = $('.circle').circleProgress('value'); // 0.5
@@ -113,6 +118,7 @@ It will return the *first* item's value (by *first* I mean when `$('.circle').le
 *It works only if the widget is already inited. Raises an error otherwise*.
 
 Set it:
+
 ```js
 $('.circle').circleProgress('value', 0.75); // set value to 0.75 & animate the change
 ```
@@ -132,11 +138,13 @@ It will return the *first* item's `<canvas>` (by *first* I mean when `$('.circle
 *It works only if the widget is already inited. Raises an error otherwise*.
 
 #### Get `CircleProgress` instance
+
 ```js
 var instance = $('#circle').data('circle-progress');
 ```
 
 #### Redraw existing circle
+
 ```js
 $('#circle').circleProgress({ value: 0.5, fill: { color: 'orange' }});
 $('#circle').circleProgress('redraw'); // use current configuration and redraw
@@ -147,6 +155,7 @@ $('#circle').circleProgress({ size: 150 }); // set new size and redraw
 *It works only if the widget is already inited. Raises an error otherwise*.
 
 #### Change default options
+
 ```js
 $.circleProgress.defaults.size = 50;
 ```
@@ -177,3 +186,56 @@ It's not in the "core" but you can use [my example of mouse/touch events handlin
 #### May I customize the shape somehow?
 
 It's a bit "tricky" but possible. Here is [my little collection](https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts).
+
+Development
+-----------
+
+#### Install
+
+```sh
+git clone git@github.com:kottenator/jquery-circle-progress.git
+npm install
+```
+
+#### Update minified version
+
+You need to update `dist/circle-progress.min.js`after any change to `dist/circle-progress.js`:
+ 
+```sh
+npm run build-min
+``` 
+
+#### Test
+
+```sh
+npm test
+```
+
+SauceLabs:
+
+```sh
+export SAUCE_USERNAME=...
+export SAUCE_ACCESS_KEY=...
+export BUILD_NUMBER=...
+npm test -- karma-saucelabs.conf.js
+```
+
+#### Build docs
+
+The API docs are not complete yet but you can build them:
+
+```sh
+npm run build-docs
+```
+
+They will be generated in `./docs/api/index.html`.
+
+#### Release new version
+
+You need to:
+
+* finalize the code
+* update min dist: `npm run build-min`
+* push into `master`
+* create new version tag (e.g.): `git tag v1.2.3 && git push --tags`
+* update the version in `package.json`, `bower.json` and `dist/circle-progress.js` docstring 
