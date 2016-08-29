@@ -3,7 +3,7 @@
  * {@link http://kottenator.github.io/jquery-circle-progress/}
  *
  * @author Rostyslav Bryzgunov <kottenator@gmail.com>
- * @version 1.2.0-alpha
+ * @version 1.2.0-beta
  * @licence MIT
  * @preserve
  */
