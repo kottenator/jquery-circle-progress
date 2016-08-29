@@ -105,7 +105,7 @@ I have not implemented any fallback / polyfill for unsupported browsers yet
 API
 ---
 
-#### Get/set value
+### Get/set value
 
 Get it:
 
@@ -127,7 +127,7 @@ It will update *all* selected items value and animate the change.
 It doesn't *redraw* the widget - it updates the value & animates the changes.
 For example, it may be an AJAX loading indicator, which shows the loading progress.
 
-#### Get `<canvas>`
+### Get `<canvas>`
 
 ```js
 $('.circle').circleProgress({ value: 0.5 });
@@ -137,13 +137,13 @@ var canvas = $('.circle').circleProgress('widget');
 It will return the *first* item's `<canvas>` (by *first* I mean when `$('.circle').length >= 1`).
 *It works only if the widget is already inited. Raises an error otherwise*.
 
-#### Get `CircleProgress` instance
+### Get `CircleProgress` instance
 
 ```js
 var instance = $('#circle').data('circle-progress');
 ```
 
-#### Redraw existing circle
+### Redraw existing circle
 
 ```js
 $('#circle').circleProgress({ value: 0.5, fill: { color: 'orange' }});
@@ -154,7 +154,7 @@ $('#circle').circleProgress({ size: 150 }); // set new size and redraw
 
 *It works only if the widget is already inited. Raises an error otherwise*.
 
-#### Change default options
+### Change default options
 
 ```js
 $.circleProgress.defaults.size = 50;
@@ -163,41 +163,32 @@ $.circleProgress.defaults.size = 50;
 FAQ
 ---
 
-#### How to start the animation only when the circle appears in browser's view (on scrolling)?
-
-Here is [my proposed solution](https://github.com/kottenator/jquery-circle-progress/issues/8).
-
-#### How to make the size flexible?
-
-E.g. for Retina support or for responsive design, you can do it [in the following way](https://github.com/kottenator/jquery-circle-progress/issues/17).
-
-#### What if I need it to run in IE8?
-
-There is no full-feature support for IE8 (actually, I didn't imlpement IE8 support at all). But you may follow [my recommendations](https://github.com/kottenator/jquery-circle-progress/issues/35).
-
-#### How to stop the animation?
-
-Here is [what you can do](https://github.com/kottenator/jquery-circle-progress/issues/37).
-
-#### Can I handle "click" event?
-
-It's not in the "core" but you can use [my example of mouse/touch events handling](http://output.jsbin.com/fetequ/5).
-
-#### May I customize the shape somehow?
-
-It's a bit "tricky" but possible. Here is [my little collection](https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts).
+<dl>
+<dt>How to start the animation only when the circle appears in browser's view (on scrolling)?
+<dd>Here is [my proposed solution](https://github.com/kottenator/jquery-circle-progress/issues/8).
+<dt>How to make the size flexible?
+<dd>E.g. for Retina support or for responsive design, you can do it [in the following way](https://github.com/kottenator/jquery-circle-progress/issues/17).
+<dt>What if I need it to run in IE8?
+<dd>There is no full-feature support for IE8 (actually, I didn't imlpement IE8 support at all). But you may follow [my recommendations](https://github.com/kottenator/jquery-circle-progress/issues/35).
+<dt>How to stop the animation?
+<dd>Here is [what you can do](https://github.com/kottenator/jquery-circle-progress/issues/37).
+<dt>Can I handle "click" event?
+<dd>It's not in the "core" but you can use [my example of mouse/touch events handling](http://output.jsbin.com/fetequ/5).
+<dt>May I customize the shape somehow?
+<dd>It's a bit "tricky" but possible. Here is [my little collection](https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts).
+</dl>
 
 Development
 -----------
 
-#### Install
+### Install
 
 ```sh
 git clone git@github.com:kottenator/jquery-circle-progress.git
 npm install
 ```
 
-#### Update minified version
+### Update minified version
 
 You need to update `dist/circle-progress.min.js`after any change to `dist/circle-progress.js`:
  
@@ -205,7 +196,7 @@ You need to update `dist/circle-progress.min.js`after any change to `dist/circle
 npm run build-min
 ``` 
 
-#### Test
+### Test
 
 ```sh
 npm test
@@ -220,7 +211,7 @@ export BUILD_NUMBER=...
 npm test -- karma-saucelabs.conf.js
 ```
 
-#### Build docs
+### Build docs
 
 The API docs are not complete yet but you can build them:
 
@@ -228,9 +219,9 @@ The API docs are not complete yet but you can build them:
 npm run build-docs
 ```
 
-They will be generated in `./docs/api/index.html`.
+They will be generated in `./docs/api/`.
 
-#### Release new version
+### Release new version
 
 You need to:
 
