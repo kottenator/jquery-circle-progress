@@ -165,17 +165,17 @@ FAQ
 
 <dl>
 <dt>How to start the animation only when the circle appears in browser's view (on scrolling)?
-<dd>Here is [my proposed solution](https://github.com/kottenator/jquery-circle-progress/issues/8).
+<dd>Here is <a href="https://github.com/kottenator/jquery-circle-progress/issues/8">my proposed solution</a>.
 <dt>How to make the size flexible?
-<dd>E.g. for Retina support or for responsive design, you can do it [in the following way](https://github.com/kottenator/jquery-circle-progress/issues/17).
+<dd>E.g. for responsive design, you can do it <a href="https://github.com/kottenator/jquery-circle-progress/issues/17">in the following way</a>.
 <dt>What if I need it to run in IE8?
-<dd>There is no full-feature support for IE8 (actually, I didn't imlpement IE8 support at all). But you may follow [my recommendations](https://github.com/kottenator/jquery-circle-progress/issues/35).
+<dd>There is no full-feature support for IE8 (actually, I didn't imlpement IE8 support at all). But you may follow <a href="https://github.com/kottenator/jquery-circle-progress/issues/35">my recommendations</a>.
 <dt>How to stop the animation?
-<dd>Here is [what you can do](https://github.com/kottenator/jquery-circle-progress/issues/37).
+<dd>Here is <a href="https://github.com/kottenator/jquery-circle-progress/issues/37">what you can do</a>.
 <dt>Can I handle "click" event?
-<dd>It's not in the "core" but you can use [my example of mouse/touch events handling](http://output.jsbin.com/fetequ/5).
+<dd>It's not in the "core" but you can use <a href="http://output.jsbin.com/fetequ/5">my example of mouse/touch events handling</a>.
 <dt>May I customize the shape somehow?
-<dd>It's a bit "tricky" but possible. Here is [my little collection](https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts).
+<dd>It's a bit "tricky" but possible. Here is <a href="https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts">my little collection</a>.
 </dl>
 
 Development
