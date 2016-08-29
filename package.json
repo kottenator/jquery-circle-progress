@@ -4,6 +4,7 @@
   "author": "Rostyslav Bryzgunov <kottenator@gmail.com>",
   "description": "Plugin to draw animated circular progress bars",
   "license": "MIT",
+  "main": "dist/circle-progress.js",
   "keywords": [
     "jquery",
     "canvas",
@@ -13,7 +14,6 @@
     "jquery": "*"
   },
   "devDependencies": {
-    "modernizr": "~3.3",
     "karma": "~1.2",
     "qunitjs": "~2.0",
     "karma-qunit": "~1.2",
@@ -24,7 +24,6 @@
     "jsdoc": "~3.4"
   },
   "scripts": {
-    "postinstall": "node_modules/.bin/modernizr -f canvas -d tests/modernizr.js",
     "test": "karma start",
     "build-min": "uglifyjs dist/circle-progress.js -cmo dist/circle-progress.min.js --comments",
     "build-docs": "jsdoc dist/circle-progress.js -c jsdoc.conf"
