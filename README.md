@@ -20,7 +20,7 @@ Usage
 -----
 
 ```html
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="jquery-circle-progress/dist/circle-progress.js"></script>
 
 <div id="circle"></div>
@@ -190,7 +190,7 @@ npm install
 
 ### Update minified version
 
-You need to update `dist/circle-progress.min.js`after any change to `dist/circle-progress.js`:
+You need to update `dist/circle-progress.min.js` after any change to `dist/circle-progress.js`:
  
 ```sh
 npm run build-min
@@ -219,7 +219,7 @@ The API docs are not complete yet but you can build them:
 npm run build-docs
 ```
 
-They will be generated in `./docs/api/`.
+They will be generated in `docs/api/`.
 
 ### Release new version
 
