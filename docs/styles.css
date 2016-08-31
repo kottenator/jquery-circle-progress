@@ -21,6 +21,10 @@ a {
   text-align: center;
 }
 
+.circles {
+  margin-bottom: -10px;
+}
+
 .circle {
   width: 100px;
   margin: 6px 6px 20px;
@@ -61,21 +65,12 @@ p {
 }
 
 .install {
-  margin: 50px 0;
-}
-
-.install code {
-  padding: 6px 12px;
   display: inline-block;
-  font: 13px/20px Courier New, Liberation Mono, monospase;
-  background-color: #333333;
-  border-radius: 4px;
-  margin: 5px 0;
-  white-space: nowrap;
 }
 
 .install a {
-  display: inline-block;
+  display: block;
+  width: auto;
   vertical-align: middle;
   padding: 6px 12px;
   line-height: 20px;
@@ -83,8 +78,18 @@ p {
   color: #fff;
   border-radius: 3px;
   text-decoration: none;
-  margin: 5px 0;
+  margin: 5px auto;
   transition: all .3s;
+}
+
+.install code {
+  padding: 6px 12px;
+  display: block;
+  font: 13px/20px Courier New, Liberation Mono, monospase;
+  background-color: #333333;
+  border-radius: 4px;
+  margin: 5px 0;
+  white-space: nowrap;
 }
 
 .install a:hover {
