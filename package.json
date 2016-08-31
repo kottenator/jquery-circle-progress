@@ -1,6 +1,6 @@
 {
     "name": "jquery-circle-progress",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "author": "Rostyslav Bryzgunov <kottenator@gmail.com>",
     "description": "Plugin to draw animated circular progress bars",
     "license": "MIT",
@@ -9,6 +9,7 @@
         "canvas",
         "progress-bar"
     ],
+    "main": "dist/circle-progress.js",
     "dependencies": {},
     "devDependencies": {
         "karma": "~0.12.24",
