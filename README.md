@@ -1,8 +1,9 @@
 jquery-circle-progress
 ======================
 
-[![Build Status](https://travis-ci.org/kottenator/jquery-circle-progress.svg?branch=master)](https://travis-ci.org/kottenator/jquery-circle-progress)
-[![Bower version](https://badge.fury.io/bo/jquery-circle-progress.svg)](https://badge.fury.io/bo/jquery-circle-progress)
+[![Build status](https://travis-ci.org/kottenator/jquery-circle-progress.svg?branch=master)](https://travis-ci.org/kottenator/jquery-circle-progress)
+[![Bower version](https://img.shields.io/bower/v/jquery-circle-progress.svg?maxAge=2592000)](https://bower.io/search/?q=jquery-circle-progress)
+[![NPM version](https://img.shields.io/npm/v/jquery-circle-progress.svg?maxAge=2592000)](https://www.npmjs.com/package/jquery-circle-progress)
 
 jQuery Plugin to draw animated circular progress bars like this:
 
@@ -233,3 +234,6 @@ You need to:
 * push into `master`
 * create new version tag (e.g.): `git tag v1.2.3 && git push --tags`
 * update the version in `package.json`, `bower.json` and `dist/circle-progress.js` docstring 
+* publish new NPM version: `npm publish`, but be aware:
+  > Once a package is published with a given name and version, that specific name and version combination can never be used again
+  > - [NPM docs](https://docs.npmjs.com/cli/publish)
