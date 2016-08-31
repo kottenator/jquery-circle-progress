@@ -14,8 +14,11 @@ Check out [more examples](http://kottenator.github.io/jquery-circle-progress/)! 
 Install
 -------
 
-Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases)
-or `bower install jquery-circle-progress`
+Make your choice:
+
+* Download [latest GitHub release](https://github.com/kottenator/jquery-circle-progress/releases)
+* `bower install jquery-circle-progress`
+* `npm install jquery-circle-progress`
 
 Usage
 -----
@@ -80,19 +83,12 @@ Also, object options like `"fill"` or `"animation"` should be valid JSON (and do
 Events
 ------
 
-When animation is enabled, there are 3 events available:
-
-| Event | Handler |
-| ---- | ---- |
-| `circle-animation-start` | `function(event)`: <br>- `event` - jQuery event |
-| `circle-animation-progress` | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - from `0.0` to `1.0` <br>- `stepValue` - current step value: from `0.0` to `value` |
-| `circle-animation-end` | `function(event)`: <br>- `event` - jQuery event |
-
-When the circular progress bar is inited or re-inited, there is the following event:
-
-| Event | Handler |
-| ---- | ---- |
-| `circle-inited` | `function(event)`: <br>- `event` - jQuery event |
+| Event | Description | Handler |
+| ---- | ---- | ---- |
+| `circle-inited` | Triggered on init or re-init. | `function(event)`: <br>- `event` - jQuery event |
+| `circle-animation-start` | Triggered once the animation is started. | `function(event)`: <br>- `event` - jQuery event |
+| `circle-animation-progress` | Triggered on each [animation tick](http://api.jquery.com/animate/#step). | `function(event, animationProgress, stepValue)`: <br>- `event` - jQuery event <br>- `animationProgress` - from `0.0` to `1.0` <br>- `stepValue` - current step value: from `0.0` to `value` |
+| `circle-animation-end` | Triggered once the animation is finished. | `function(event)`: <br>- `event` - jQuery event |
 
 Browsers support
 ----------------
@@ -178,6 +174,18 @@ FAQ
 <dt>May I customize the shape somehow?
 <dd>It's a bit "tricky" but possible. Here is <a href="https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts">my little collection</a>.
 </dl>
+
+Module loading
+--------------
+
+### Global object
+
+Good old `<script>` in HTML:
+
+```
+
+```
+
 
 Development
 -----------
