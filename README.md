@@ -24,7 +24,7 @@ Usage
 -----
 
 ```html
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="jquery-circle-progress/dist/circle-progress.js"></script>
 
 <div id="circle"></div>
@@ -39,6 +39,8 @@ Usage
     });
 </script>
 ```
+
+If you use AMD or CommonJS with some JS bundler - see the [UMD section](#umd) below.
 
 Options
 -------
@@ -93,11 +95,78 @@ Events
 Browsers support
 ----------------
 
-It uses `<canvas>` which is supported by all modern browsers *(including mobile browsers)*
+The library uses `<canvas>` which is supported by all modern browsers *(including mobile browsers)*
 and Internet Explorer 9+ ([Can I Use](http://caniuse.com/#search=canvas)).
 
-I have not implemented any fallback / polyfill for unsupported browsers yet
+I haven't implemented any fallback / polyfill for unsupported browsers yet
 *(i.e. for Internet Explorer 8 and older / misc browsers)*.
+
+UMD
+---
+
+I use [UMD template for jQuery plugin](https://github.com/umdjs/umd/blob/d31bb6ee7098715e019f52bdfe27b3e4bfd2b97e/templates/jqueryPlugin.js) which combines three things:
+
+* works fine with _global_ script inclusion
+* works fine with AMD
+* works fine CommonJS
+
+## Global
+
+Good old `<script>` tag in HTML:
+
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="jquery-circle-progress/dist/circle-progress.js"></script>
+<script>
+  $('#circle').circleProgress({
+    value: 0.75,
+  });
+</script>
+```
+
+## AMD
+
+Assuming that you have `jquery`, `jquery-circle-progress` and `requirejs` in `libs/` directory:
+
+```html
+<script src="libs/requirejs/require.js"></script>
+<script>
+	requirejs.config({
+		paths: {
+			'jquery': 'libs/jquery/dist/jquery', // 'jquery' path is required - 'jquery-circle-progress' requires it
+			'jquery-circle-progress': 'libs/jquery-circle-progress/dist/circle-progress' // and this one is for your convenience
+		}
+	});
+	requirejs(['jquery', 'jquery-circle-progress'], function($) {
+		$('#circle').circleProgress({
+			value: 0.75
+		});
+	});
+</script>
+```
+
+You can [configure RequireJS](http://requirejs.org/docs/api.html) as you wish, just make `'jquery'` dependency reachable.
+
+## CommonJS
+
+```js
+// script.js
+require('jquery-circle-progress');
+var $ = require('jquery');
+$('#circle').circleProgress({
+	value: 0.75
+});
+```
+
+```sh
+some-js-bundler < script.js > script.bundle.js
+```
+
+```html
+<script src="script.bundle.js"></script>
+```
+
+You can use any JS bundler ([Webpack](https://webpack.github.io/), [Browserify](http://browserify.org/), etc) - no specific configuration required.
 
 API
 ---
@@ -174,18 +243,6 @@ FAQ
 <dt>May I customize the shape somehow?
 <dd>It's a bit "tricky" but possible. Here is <a href="https://github.com/kottenator/jquery-circle-progress/wiki/Custom-layouts">my little collection</a>.
 </dl>
-
-Module loading
---------------
-
-### Global object
-
-Good old `<script>` in HTML:
-
-```
-
-```
-
 
 Development
 -----------
