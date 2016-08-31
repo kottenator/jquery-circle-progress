@@ -235,5 +235,5 @@ You need to:
 * create new version tag (e.g.): `git tag v1.2.3 && git push --tags`
 * update the version in `package.json`, `bower.json` and `dist/circle-progress.js` docstring 
 * publish new NPM version: `npm publish`, but be aware:
-  > Once a package is published with a given name and version, that specific name and version combination can never be used again
-  > - [NPM docs](https://docs.npmjs.com/cli/publish)
+  
+  > Once a package is published with a given name and version, that specific name and version combination can never be used again - [NPM docs](https://docs.npmjs.com/cli/publish)
