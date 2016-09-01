@@ -30,13 +30,13 @@ Usage
 <div id="circle"></div>
 
 <script>
-    $('#circle').circleProgress({
-        value: 0.75,
-        size: 80,
-        fill: {
-            gradient: ["red", "orange"]
-        }
-    });
+  $('#circle').circleProgress({
+    value: 0.75,
+    size: 80,
+    fill: {
+      gradient: ["red", "orange"]
+    }
+  });
 </script>
 ```
 
@@ -45,7 +45,7 @@ If you use AMD or CommonJS with some JS bundler - see the [UMD section](#umd) be
 Options
 -------
 
-You should specify options like in usage example above.
+Specify options like in example above.
 
 | Option  | Description |
 | ---- | ---- | ---- |
@@ -69,16 +69,16 @@ Also, object options like `"fill"` or `"animation"` should be valid JSON (and do
 
 ```html
 <div
-    class="circle"
-    data-value="0.9"
-    data-size="60"
-    data-thickness="20"
-    data-animation-start-value="1.0"
-    data-fill="{
-        &quot;color&quot;: &quot;rgba(0, 0, 0, .3)&quot;,
-        &quot;image&quot;: &quot;http://i.imgur.com/pT0i89v.png&quot;
-    }"
-    data-reverse="true"
+  class="circle"
+  data-value="0.9"
+  data-size="60"
+  data-thickness="20"
+  data-animation-start-value="1.0"
+  data-fill="{
+    &quot;color&quot;: &quot;rgba(0, 0, 0, .3)&quot;,
+    &quot;image&quot;: &quot;http://i.imgur.com/pT0i89v.png&quot;
+  }"
+  data-reverse="true"
 ></div>
 ```
 
@@ -106,16 +106,14 @@ UMD
 
 I use [UMD template for jQuery plugin](https://github.com/umdjs/umd/blob/d31bb6ee7098715e019f52bdfe27b3e4bfd2b97e/templates/jqueryPlugin.js) which combines three things:
 
-* works fine with _global_ script inclusion
+* works fine with _browser globals_
 * works fine with AMD
-* works fine CommonJS
+* works fine with CommonJS
 
-## Global
-
-Good old `<script>` tag in HTML:
+## Browser globals
 
 ```html
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="jquery-circle-progress/dist/circle-progress.js"></script>
 <script>
   $('#circle').circleProgress({
@@ -131,17 +129,17 @@ Assuming that you have `jquery`, `jquery-circle-progress` and `requirejs` in `li
 ```html
 <script src="libs/requirejs/require.js"></script>
 <script>
-	requirejs.config({
-		paths: {
-			'jquery': 'libs/jquery/dist/jquery', // 'jquery' path is required - 'jquery-circle-progress' requires it
-			'jquery-circle-progress': 'libs/jquery-circle-progress/dist/circle-progress' // and this one is for your convenience
-		}
-	});
-	requirejs(['jquery', 'jquery-circle-progress'], function($) {
-		$('#circle').circleProgress({
-			value: 0.75
-		});
-	});
+  requirejs.config({
+    paths: {
+      'jquery': 'libs/jquery/dist/jquery', // 'jquery' path is required - 'jquery-circle-progress' requires it
+      'jquery-circle-progress': 'libs/jquery-circle-progress/dist/circle-progress' // and this one is for your convenience
+    }
+  });
+  requirejs(['jquery', 'jquery-circle-progress'], function($) {
+    $('#circle').circleProgress({
+      value: 0.75
+    });
+  });
 </script>
 ```
 
@@ -154,7 +152,7 @@ You can [configure RequireJS](http://requirejs.org/docs/api.html) as you wish, j
 require('jquery-circle-progress');
 var $ = require('jquery');
 $('#circle').circleProgress({
-	value: 0.75
+  value: 0.75
 });
 ```
 
