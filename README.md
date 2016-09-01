@@ -110,7 +110,7 @@ I use [UMD template for jQuery plugin](https://github.com/umdjs/umd/blob/d31bb6e
 * works fine with AMD
 * works fine with CommonJS
 
-## Browser globals
+### Browser globals
 
 ```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -122,7 +122,7 @@ I use [UMD template for jQuery plugin](https://github.com/umdjs/umd/blob/d31bb6e
 </script>
 ```
 
-## AMD
+### AMD
 
 Assuming that you have `jquery`, `jquery-circle-progress` and `requirejs` in `libs/` directory:
 
@@ -145,7 +145,7 @@ Assuming that you have `jquery`, `jquery-circle-progress` and `requirejs` in `li
 
 You can [configure RequireJS](http://requirejs.org/docs/api.html) as you wish, just make `'jquery'` dependency reachable.
 
-## CommonJS
+### CommonJS
 
 ```js
 // script.js
