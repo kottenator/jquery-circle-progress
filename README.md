@@ -252,7 +252,7 @@ git clone git@github.com:kottenator/jquery-circle-progress.git
 npm install
 ```
 
-### Update minified version
+### Modify
 
 You need to update `dist/circle-progress.min.js` after any change to `dist/circle-progress.js`:
  
@@ -290,13 +290,13 @@ They will be generated in `docs/api/`.
 
 ### Release new version
 
-You need to:
-
 * finalize the code
+* update the version in `package.json`, `bower.json` and `dist/circle-progress.js` docstring
 * update min dist: `npm run build-min`
-* push into `master`
-* create new version tag (e.g.): `git tag v1.2.3 && git push --tags`
-* update the version in `package.json`, `bower.json` and `dist/circle-progress.js` docstring 
-* publish new NPM version: `npm publish`, but be aware:
+* update `docs/index.html` - link to the latest dist version _(which doesn't exist yet)_
+* push the changes to `master` branch
+* release on Bower: just create a Git tag (e.g.): `git tag v1.2.3 && git push --tags`
+* release on GitHub - add release notes to the Git tag
+* release on NPM: `npm publish`, but be aware:
   
   > Once a package is published with a given name and version, that specific name and version combination can never be used again - [NPM docs](https://docs.npmjs.com/cli/publish)
