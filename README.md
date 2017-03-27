@@ -47,8 +47,8 @@ Options
 
 Specify options like in example above.
 
-| Option  | Description |
-| ---- | ---- | ---- |
+| Option | Description |
+| ---- | ---- |
 | **value** | This is the only required option. It should be from `0.0` to `1.0` <br> Default: `0` |
 | size | Size of the circle / canvas in pixels <br> Default: `100` |
 | startAngle | Initial angle (for `0` value) <br> Default: `-Math.PI` |
