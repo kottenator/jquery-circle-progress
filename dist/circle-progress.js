@@ -3,7 +3,7 @@
  * {@link http://kottenator.github.io/jquery-circle-progress/}
  *
  * @author Rostyslav Bryzgunov <kottenator@gmail.com>
- * @version 1.2.1
+ * @version 1.2.2
  * @licence MIT
  * @preserve
  */
@@ -470,10 +470,14 @@
   };
 
   // ease-in-out-cubic
-  $.easing.circleProgressEasing = function(x, t, b, c, d) {
-    if ((t /= d / 2) < 1)
-      return c / 2 * t * t * t + b;
-    return c / 2 * ((t -= 2) * t * t + 2) + b;
+  $.easing.circleProgressEasing = function(x) {
+    if (x < 0.5) {
+      x = 2 * x;
+      return 0.5 * x * x * x;
+    } else {
+      x = 2 - 2 * x;
+      return 1 - 0.5 * x * x * x;
+    }
   };
 
   /**
