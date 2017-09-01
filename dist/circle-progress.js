@@ -68,6 +68,14 @@
     thickness: 'auto',
 
     /**
+     * Width of the empty arc (under the filled one) in pixels.
+     * If it's `'auto'`, it falls back to the value of the `thickness` property.
+     * @type {number|string}
+     * @default 'auto'
+     */
+    emptyThickness: 'auto',
+
+    /**
      * Fill of the arc. You may set it to:
      *
      *   - solid color:
@@ -369,24 +377,27 @@
     drawEmptyArc: function(v) {
       var ctx = this.ctx,
         r = this.radius,
-        t = this.getThickness(),
+        tFill = this.getThickness(),
+        tEmpty = this.getEmptyThickness(),
         a = this.startAngle;
+
+        console.log(tFill, tEmpty);
 
       if (v < 1) {
         ctx.save();
         ctx.beginPath();
 
         if (v <= 0) {
-          ctx.arc(r, r, r - t / 2, 0, Math.PI * 2);
+          ctx.arc(r, r, r - tFill / 2, 0, Math.PI * 2);
         } else {
           if (!this.reverse) {
-            ctx.arc(r, r, r - t / 2, a + Math.PI * 2 * v, a);
+            ctx.arc(r, r, r - tFill / 2, a + Math.PI * 2 * v, a);
           } else {
-            ctx.arc(r, r, r - t / 2, a, a - Math.PI * 2 * v);
+            ctx.arc(r, r, r - tFill / 2, a, a - Math.PI * 2 * v);
           }
         }
 
-        ctx.lineWidth = t;
+        ctx.lineWidth = tEmpty;
         ctx.strokeStyle = this.emptyFill;
         ctx.stroke();
         ctx.restore();
@@ -439,6 +450,16 @@
      */
     getThickness: function() {
       return $.isNumeric(this.thickness) ? this.thickness : this.size / 14;
+    },
+
+    /**
+     * Get the empty arc thickness.
+     * @see CircleProgress#emptyThickness
+     * @protected
+     * @returns {number}
+     */
+    getEmptyThickness: function() {
+      return $.isNumeric(this.emptyThickness) ? this.emptyThickness : this.getThickness();
     },
 
     /**
