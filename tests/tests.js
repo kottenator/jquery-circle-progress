@@ -55,8 +55,8 @@
     }).circleProgress('widget');
     var defaultSize = $.circleProgress.defaults.size;
 
-    assert.pixelHex(canvas, 1, defaultSize / 2 - 1, color);
-    assert.pixelHex(canvas, defaultSize - 1, defaultSize / 2 - 1, color);
+    assert.pixelHex(canvas, 2, defaultSize / 2 - 1, color);
+    assert.pixelHex(canvas, defaultSize - 2, defaultSize / 2 - 1, color);
   });
 
   QUnit.module("Layout tests with animation");
