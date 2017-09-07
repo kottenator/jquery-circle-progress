@@ -350,6 +350,7 @@
 
       var ctx = this.ctx,
         r = this.radius,
+        arcR = this.getArcRadius(),
         t = this.getThickness(),
         a = this.startAngle;
 
@@ -357,9 +358,9 @@
       ctx.beginPath();
 
       if (!this.reverse) {
-        ctx.arc(r, r, r - t / 2, a, a + Math.PI * 2 * v);
+        ctx.arc(r, r, arcR, a, a + Math.PI * 2 * v);
       } else {
-        ctx.arc(r, r, r - t / 2, a - Math.PI * 2 * v, a);
+        ctx.arc(r, r, arcR, a - Math.PI * 2 * v, a);
       }
 
       ctx.lineWidth = t;
@@ -377,27 +378,21 @@
     drawEmptyArc: function(v) {
       var ctx = this.ctx,
         r = this.radius,
-        tFill = this.getThickness(),
-        tEmpty = this.getEmptyThickness(),
+        arcR = this.getArcRadius(),
+        t = this.getEmptyThickness(),
         a = this.startAngle;
-
-        console.log(tFill, tEmpty);
 
       if (v < 1) {
         ctx.save();
         ctx.beginPath();
 
-        if (v <= 0) {
-          ctx.arc(r, r, r - tFill / 2, 0, Math.PI * 2);
+        if (this.reverse) {
+          ctx.arc(r, r, arcR, 0, Math.PI * 2);
         } else {
-          if (!this.reverse) {
-            ctx.arc(r, r, r - tFill / 2, a + Math.PI * 2 * v, a);
-          } else {
-            ctx.arc(r, r, r - tFill / 2, a, a - Math.PI * 2 * v);
-          }
+          ctx.arc(r, r, arcR, Math.PI * 2, 0);
         }
 
-        ctx.lineWidth = tEmpty;
+        ctx.lineWidth = t;
         ctx.strokeStyle = this.emptyFill;
         ctx.stroke();
         ctx.restore();
@@ -460,6 +455,15 @@
      */
     getEmptyThickness: function() {
       return $.isNumeric(this.emptyThickness) ? this.emptyThickness : this.getThickness();
+    },
+
+    /**
+     * Returns the real arc radius, after the thickness has been accounted for.
+     * @private
+     * @returns {number}
+     */
+    getArcRadius: function() {
+      return this.radius - Math.max(this.getThickness(), this.getEmptyThickness()) / 2;
     },
 
     /**
