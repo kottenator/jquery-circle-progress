@@ -54,6 +54,7 @@ Specify options like in example above.
 | startAngle | Initial angle (for `0` value) <br> Default: `-Math.PI` |
 | reverse | Reverse animation and arc draw <br> Default: `false` |
 | thickness | Width of the arc. By default it's automatically calculated as 1/14 of `size` but you may set your own number <br> Default: `"auto"` |
+| emptyThickness | Width of the empty arc. By default it falls back to the `thickness` parameter <br> Default: `"auto"` |
 | lineCap | Arc line cap: `"butt"`, `"round"` or `"square"` - [read more](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.lineCap) <br> Default: `"butt"`
 | fill | The arc fill config. You may specify next:  <br>- `"#ff1e41"` <br>- `{ color: "#ff1e41" }` <br>- `{ color: 'rgba(255, 255, 255, .3)' }` <br>- `{ gradient: ["red", "green", "blue"] }` <br>- `{ gradient: [["red", .2], ["green", .3], ["blue", .8]] }` <br>- `{ gradient: [ ... ], gradientAngle: Math.PI / 4 }` <br>- `{ gradient: [ ... ], gradientDirection: [x0, y0, x1, y1] }` <br>- `{ image: "http://i.imgur.com/pT0i89v.png" }`<br>- `{ image: imageInstance }`<br>- `{ color: "lime", image: "http://i.imgur.com/pT0i89v.png" }` <br> Default: `{ gradient: ["#3aeabb", "#fdd250"] }` |
 | emptyFill | Color of the "empty" arc. Only a color fill supported by now <br> Default: `"rgba(0, 0, 0, .1)"` |
@@ -255,7 +256,7 @@ npm install
 ### Modify
 
 You need to update `dist/circle-progress.min.js` after any change to `dist/circle-progress.js`:
- 
+
 ```sh
 npm run build-min
 ```
@@ -298,5 +299,5 @@ They will be generated in `docs/api/`.
 * release on Bower: just create a Git tag (e.g.): `git tag v1.2.3 && git push --tags`
 * release on GitHub - add release notes to the Git tag
 * release on NPM: `npm publish`, but be aware:
-  
+
   > Once a package is published with a given name and version, that specific name and version combination can never be used again - [NPM docs](https://docs.npmjs.com/cli/publish)
