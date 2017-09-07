@@ -79,4 +79,20 @@
     // "data-" attributes are taken into account only on init (not on update/redraw)
     // "data-fill" (and other object options) should be in valid JSON format
   });
+
+  /*
+   * Example 6:
+   *
+   * - custom gradient
+   * - different thicknesses
+   */
+  var c6 = $('.sixth.circle');
+
+  c6.circleProgress({
+    value: 0.75,
+    lineCap: 'round',
+    emptyThickness: 15,
+    thickness: 5,
+    fill: {gradient: ['#f4ad60', '#fffaaa']}
+  });
 })(jQuery);
