@@ -379,8 +379,7 @@
       var ctx = this.ctx,
         r = this.radius,
         arcR = this.getArcRadius(),
-        t = this.getEmptyThickness(),
-        a = this.startAngle;
+        t = this.getEmptyThickness();
 
       if (v < 1) {
         ctx.save();
