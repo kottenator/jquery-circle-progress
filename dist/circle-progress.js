@@ -377,11 +377,7 @@
         ctx.save();
         ctx.beginPath();
 
-        if (this.reverse) {
-          ctx.arc(r, r, arcR, 0, Math.PI * 2);
-        } else {
-          ctx.arc(r, r, arcR, Math.PI * 2, 0);
-        }
+        ctx.arc(r, r, arcR, 0, Math.PI * 2);
 
         ctx.lineWidth = t;
         ctx.strokeStyle = this.emptyFill;
