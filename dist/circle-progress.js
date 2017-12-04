@@ -342,7 +342,7 @@
 
       var ctx = this.ctx,
         r = this.size / 2,
-        arcR = this.getArcRadius(),
+        arcR = this.getRadius(),
         t = this.getThickness(),
         a = this.startAngle;
 
@@ -370,7 +370,7 @@
     drawEmptyArc: function(v) {
       var ctx = this.ctx,
         r = this.size / 2,
-        arcR = this.getArcRadius(),
+        arcR = this.getRadius(),
         t = this.getEmptyThickness();
 
       if (v < 1) {
@@ -453,7 +453,7 @@
      * @private
      * @returns {number}
      */
-    getArcRadius: function() {
+    getRadius: function() {
       return (this.size / 2) - Math.max(this.getThickness(), this.getEmptyThickness()) / 2;
     },
 
