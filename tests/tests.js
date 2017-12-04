@@ -55,8 +55,49 @@
     }).circleProgress('widget');
     var defaultSize = $.circleProgress.defaults.size;
 
-    assert.pixelHex(canvas, 1, defaultSize / 2 - 1, color);
-    assert.pixelHex(canvas, defaultSize - 1, defaultSize / 2 - 1, color);
+    assert.pixelHex(canvas, 2, defaultSize / 2 - 1, color);
+    assert.pixelHex(canvas, defaultSize - 2, defaultSize / 2 - 1, color);
+  });
+
+  QUnit.test("Test circle with emptyThickness < thickness", function(assert) {
+    var color = '#ff0000';
+    var emptyColor = '#00ff00';
+    var thickness = 4;
+    var emptyThickness = 2;
+
+    var canvas = createCircle({
+      value: 0.5,
+      thickness: thickness,
+      emptyThickness: emptyThickness,
+      fill: { color: color },
+      emptyFill: emptyColor,
+      animation: false
+    }).circleProgress('widget');
+    var defaultSize = $.circleProgress.defaults.size;
+
+    assert.pixelHex(canvas, defaultSize / 2 - 1, 1, color);
+    assert.pixelHex(canvas, defaultSize / 2 - 1, defaultSize - thickness / 2, emptyColor);
+  });
+
+  QUnit.test("Test circle with emptyThickness > thickness", function(assert) {
+    var color = '#ff0000';
+    var emptyColor = '#00ff00';
+    var thickness = 5;
+    var emptyThickness = 10;
+
+    var canvas = createCircle({
+      value: 0.5,
+      thickness: thickness,
+      emptyThickness: emptyThickness,
+      fill: { color: color },
+      emptyFill: emptyColor,
+      animation: false
+    }).circleProgress('widget');
+    var defaultSize = $.circleProgress.defaults.size;
+
+    assert.pixelHex(canvas, defaultSize / 2 - 1, 1, emptyColor);
+    assert.pixelHex(canvas, defaultSize / 2 - 1, defaultSize - emptyThickness / 2, emptyColor);
+    assert.pixelHex(canvas, defaultSize / 2 - 1, emptyThickness / 2, color);
   });
 
   QUnit.module("Layout tests with animation");
@@ -263,5 +304,37 @@
 
     assert.equal(50, $(canvas).height());
     assert.equal(50, canvas.width);
+  });
+
+  QUnit.module("Value tests");
+
+  QUnit.test("Test that `emptyThickness` defaults to `thickness`", function (assert) {
+    var thickness = 10;
+    var canvas = createCircle({
+      value: 0,
+      thickness: thickness
+    });
+
+    assert.strictEqual(canvas.data('circle-progress').getEmptyThickness(), thickness);
+  });
+
+  $.each([
+    [1, 10],
+    [6, 6],
+    [20, 0.1]
+  ], function (i, testData) {
+    var thickness = testData[0],
+      emptyThickness = testData[1],
+      defaultSize = $.circleProgress.defaults.size;;
+
+    QUnit.test("Test that the arc radius is properly calculated with thickness = " + String(thickness) + " and emptyThickness = " + String(emptyThickness), function (assert) {
+      var canvas = createCircle({
+        thickness: thickness,
+        emptyThickness: emptyThickness
+      });
+
+      assert.strictEqual(canvas.data('circle-progress').getRadius(),
+        (defaultSize - Math.max(emptyThickness, thickness)) / 2);
+    });
   });
 })();

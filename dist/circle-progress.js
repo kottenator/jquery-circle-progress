@@ -68,6 +68,14 @@
     thickness: 'auto',
 
     /**
+     * Width of the empty arc (under the filled one) in pixels.
+     * If it's `'auto'`, it falls back to the value of the `thickness` property.
+     * @type {number|string}
+     * @default 'auto'
+     */
+    emptyThickness: 'auto',
+
+    /**
      * Fill of the arc. You may set it to:
      *
      *   - solid color:
@@ -171,13 +179,6 @@
     ctx: null,
 
     /**
-     * Radius of the outer circle. Automatically calculated as `[this.size]{@link CircleProgress#size} / 2`.
-     * @protected
-     * @type {number}
-     */
-    radius: 0.0,
-
-    /**
      * Fill of the main arc. Automatically calculated, depending on [this.fill]{@link CircleProgress#fill} option.
      * @protected
      * @type {string|CanvasGradient|CanvasPattern}
@@ -202,7 +203,6 @@
      */
     init: function(config) {
       $.extend(this, config);
-      this.radius = this.size / 2;
       this.initWidget();
       this.initFill();
       this.draw();
@@ -341,7 +341,8 @@
         return;
 
       var ctx = this.ctx,
-        r = this.radius,
+        r = this.size / 2,
+        arcR = this.getRadius(),
         t = this.getThickness(),
         a = this.startAngle;
 
@@ -349,9 +350,9 @@
       ctx.beginPath();
 
       if (!this.reverse) {
-        ctx.arc(r, r, r - t / 2, a, a + Math.PI * 2 * v);
+        ctx.arc(r, r, arcR, a, a + Math.PI * 2 * v);
       } else {
-        ctx.arc(r, r, r - t / 2, a - Math.PI * 2 * v, a);
+        ctx.arc(r, r, arcR, a - Math.PI * 2 * v, a);
       }
 
       ctx.lineWidth = t;
@@ -368,23 +369,15 @@
      */
     drawEmptyArc: function(v) {
       var ctx = this.ctx,
-        r = this.radius,
-        t = this.getThickness(),
-        a = this.startAngle;
+        r = this.size / 2,
+        arcR = this.getRadius(),
+        t = this.getEmptyThickness();
 
       if (v < 1) {
         ctx.save();
         ctx.beginPath();
 
-        if (v <= 0) {
-          ctx.arc(r, r, r - t / 2, 0, Math.PI * 2);
-        } else {
-          if (!this.reverse) {
-            ctx.arc(r, r, r - t / 2, a + Math.PI * 2 * v, a);
-          } else {
-            ctx.arc(r, r, r - t / 2, a, a - Math.PI * 2 * v);
-          }
-        }
+        ctx.arc(r, r, arcR, 0, Math.PI * 2);
 
         ctx.lineWidth = t;
         ctx.strokeStyle = this.emptyFill;
@@ -439,6 +432,25 @@
      */
     getThickness: function() {
       return $.isNumeric(this.thickness) ? this.thickness : this.size / 14;
+    },
+
+    /**
+     * Get the empty arc thickness.
+     * @see CircleProgress#emptyThickness
+     * @protected
+     * @returns {number}
+     */
+    getEmptyThickness: function() {
+      return $.isNumeric(this.emptyThickness) ? this.emptyThickness : this.getThickness();
+    },
+
+    /**
+     * Returns the real arc radius, after the thickness has been accounted for.
+     * @private
+     * @returns {number}
+     */
+    getRadius: function() {
+      return (this.size / 2) - Math.max(this.getThickness(), this.getEmptyThickness()) / 2;
     },
 
     /**
