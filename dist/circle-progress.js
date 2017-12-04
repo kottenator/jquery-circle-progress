@@ -179,13 +179,6 @@
     ctx: null,
 
     /**
-     * Radius of the outer circle. Automatically calculated as `[this.size]{@link CircleProgress#size} / 2`.
-     * @protected
-     * @type {number}
-     */
-    radius: 0.0,
-
-    /**
      * Fill of the main arc. Automatically calculated, depending on [this.fill]{@link CircleProgress#fill} option.
      * @protected
      * @type {string|CanvasGradient|CanvasPattern}
@@ -210,7 +203,6 @@
      */
     init: function(config) {
       $.extend(this, config);
-      this.radius = this.size / 2;
       this.initWidget();
       this.initFill();
       this.draw();
@@ -349,7 +341,7 @@
         return;
 
       var ctx = this.ctx,
-        r = this.radius,
+        r = this.size / 2,
         arcR = this.getArcRadius(),
         t = this.getThickness(),
         a = this.startAngle;
@@ -377,7 +369,7 @@
      */
     drawEmptyArc: function(v) {
       var ctx = this.ctx,
-        r = this.radius,
+        r = this.size / 2,
         arcR = this.getArcRadius(),
         t = this.getEmptyThickness();
 
@@ -462,7 +454,7 @@
      * @returns {number}
      */
     getArcRadius: function() {
-      return this.radius - Math.max(this.getThickness(), this.getEmptyThickness()) / 2;
+      return (this.size / 2) - Math.max(this.getThickness(), this.getEmptyThickness()) / 2;
     },
 
     /**
