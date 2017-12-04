@@ -333,7 +333,7 @@
         emptyThickness: emptyThickness
       });
 
-      assert.strictEqual(canvas.data('circle-progress').getArcRadius(),
+      assert.strictEqual(canvas.data('circle-progress').getRadius(),
         (defaultSize - Math.max(emptyThickness, thickness)) / 2);
     });
   });
