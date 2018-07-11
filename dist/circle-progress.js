@@ -460,7 +460,28 @@
         this.animationStartValue = this.lastFrameValue;
       this.value = newValue;
       this.draw();
+    },
+
+    /**
+     * Get current fill.
+     * @protected
+     * @return {number}
+     */
+    getValue: function() {
+        return this.fill;
+    },      
+      
+    /**
+     * Set current fill
+     * @protected
+     * @param {number} newValue
+     */
+    setFill: function(newValue) {
+      this.fill = newValue;
+      this.initFill();
+      this.draw();
     }
+
   };
 
   //----------------------------------- Initiating jQuery plugin -----------------------------------
@@ -528,6 +549,19 @@
         });
       }
     }
+
+    if (configOrCommand == 'fill') {
+        if (!firstInstance)
+            throw Error('Calling "fill" method on not initialized instance is forbidden');
+        if (typeof commandArgument == 'undefined') {
+            return firstInstance.getFill();
+        } else {
+            var newValue = arguments[1];
+            return this.each(function() {
+                $(this).data(dataName).setFill(newValue);
+            });
+        }
+    }    
 
     return this.each(function() {
       var el = $(this),
